@@ -24,6 +24,16 @@ public class Vozilo {
     @Column(unique = true)
     private String registracija;
 
+
+    private String boja;
+
+    @Column(unique = true)
+    private String brojSasije;
+
+    private String gorivo;
+
+    private int kilometraza;
+
     @ManyToOne
     @JoinColumn(name = "klijent_id")
     private Klijent klijent;
