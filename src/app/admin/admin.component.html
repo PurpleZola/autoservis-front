@@ -1,0 +1,29 @@
+<mat-toolbar color="primary" class="toolbar">
+  <span class="brand">Auto Servis</span>
+  <span class="spacer"></span>
+  <span class="role-badge">Administrator</span>
+  <button mat-button (click)="logout()">
+    <mat-icon>logout</mat-icon>
+    Odjava
+  </button>
+</mat-toolbar>
+
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav mode="side" opened class="sidenav">
+    <mat-nav-list>
+      @for (item of navItems; track item.label) {
+        <a mat-list-item>
+          <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+          <span matListItemTitle>{{ item.label }}</span>
+        </a>
+      }
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content class="content">
+    <div class="welcome-panel">
+      <h1>Dobrodošli, Administratore</h1>
+      <p>Odaberite opciju iz bočnog menija za upravljanje auto servisom.</p>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
