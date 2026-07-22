@@ -1,6 +1,17 @@
 :host {
   display: block;
   height: 100dvh;
+  background:
+    radial-gradient(ellipse 900px 550px at 15% 10%, rgba(79, 209, 197, 0.12), transparent 60%),
+    radial-gradient(ellipse 700px 550px at 85% 95%, rgba(79, 209, 197, 0.07), transparent 55%),
+    repeating-linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0.025) 0px,
+      rgba(255, 255, 255, 0.025) 2px,
+      transparent 2px,
+      transparent 40px
+    ),
+    linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
 }
 
 .toolbar {
@@ -9,8 +20,9 @@
   z-index: 10;
   display: flex;
   gap: 0.75rem;
-  background: var(--mat-sys-primary);
-  color: var(--mat-sys-on-primary);
+  background-image: linear-gradient(135deg, #0f3460 0%, #00b4d8 100%);
+  color: #ffffff;
+  box-shadow: 0 4px 20px rgba(0, 180, 216, 0.25);
 }
 
 .brand {
@@ -30,16 +42,39 @@
 
 .sidenav-container {
   height: calc(100dvh - 64px);
+  background-color: transparent;
 }
 
 .sidenav {
   width: 260px;
-  border-right: 1px solid var(--mat-sys-outline-variant);
+  background-color: rgba(22, 33, 62, 0.55);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+
+  // Local dark-on-glass palette so the nav list (labels, icons, ripple)
+  // reads correctly against the translucent panel, matching the login card.
+  --mat-sys-on-surface: #eef1f6;
+  --mat-sys-on-surface-variant: #aab2c5;
+  --mat-sys-outline-variant: rgba(255, 255, 255, 0.15);
+
+  a[mat-list-item] {
+    border-radius: 8px;
+    margin: 2px 8px;
+
+    &:hover {
+      background: rgba(0, 180, 216, 0.14);
+    }
+  }
 }
 
 .content {
   padding: 2rem;
   box-sizing: border-box;
+  color: #eef1f6;
+
+  --mat-sys-on-surface: #eef1f6;
+  --mat-sys-on-surface-variant: #aab2c5;
 }
 
 .welcome-panel h1 {
