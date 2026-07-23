@@ -1,0 +1,53 @@
+<h2 mat-dialog-title>{{ isEditMode ? 'Izmijeni klijenta' : 'Dodaj klijenta' }}</h2>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div mat-dialog-content class="dialog-content">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Ime</mat-label>
+      <input matInput formControlName="ime" />
+      @if (form.controls.ime.hasError('required') && form.controls.ime.touched) {
+        <mat-error>Ime je obavezno</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Prezime</mat-label>
+      <input matInput formControlName="prezime" />
+      @if (form.controls.prezime.hasError('required') && form.controls.prezime.touched) {
+        <mat-error>Prezime je obavezno</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Telefon</mat-label>
+      <input matInput formControlName="telefon" />
+      @if (form.controls.telefon.hasError('required') && form.controls.telefon.touched) {
+        <mat-error>Telefon je obavezan</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Adresa</mat-label>
+      <input matInput formControlName="adresa" />
+      @if (form.controls.adresa.hasError('required') && form.controls.adresa.touched) {
+        <mat-error>Adresa je obavezna</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>ID korisnika</mat-label>
+      <input matInput type="number" formControlName="korisnikId" />
+      @if (form.controls.korisnikId.hasError('required') && form.controls.korisnikId.touched) {
+        <mat-error>ID korisnika je obavezan</mat-error>
+      }
+      @if (form.controls.korisnikId.hasError('min') && form.controls.korisnikId.touched) {
+        <mat-error>ID korisnika mora biti pozitivan broj</mat-error>
+      }
+    </mat-form-field>
+  </div>
+
+  <div mat-dialog-actions align="end">
+    <button mat-button type="button" (click)="onCancel()">Otkaži</button>
+    <button mat-raised-button type="submit" class="save-button">Sačuvaj</button>
+  </div>
+</form>

@@ -1,0 +1,70 @@
+<div class="klijenti-page">
+  <div class="header-row">
+    <h1>Klijenti</h1>
+    <button mat-raised-button class="add-button" (click)="openDialog()">
+      <mat-icon>add</mat-icon>
+      Dodaj klijenta
+    </button>
+  </div>
+
+  @if (errorMessage()) {
+    <div class="error-banner">
+      <mat-icon>error_outline</mat-icon>
+      <span>{{ errorMessage() }}</span>
+    </div>
+  }
+
+  @if (loading()) {
+    <div class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+  } @else {
+    <div class="table-container">
+      <table mat-table [dataSource]="klijenti()" class="klijenti-table">
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef>ID</th>
+          <td mat-cell *matCellDef="let klijent">{{ klijent.id }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="ime">
+          <th mat-header-cell *matHeaderCellDef>Ime</th>
+          <td mat-cell *matCellDef="let klijent">{{ klijent.ime }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="prezime">
+          <th mat-header-cell *matHeaderCellDef>Prezime</th>
+          <td mat-cell *matCellDef="let klijent">{{ klijent.prezime }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="telefon">
+          <th mat-header-cell *matHeaderCellDef>Telefon</th>
+          <td mat-cell *matCellDef="let klijent">{{ klijent.telefon }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="adresa">
+          <th mat-header-cell *matHeaderCellDef>Adresa</th>
+          <td mat-cell *matCellDef="let klijent">{{ klijent.adresa }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Akcije</th>
+          <td mat-cell *matCellDef="let klijent">
+            <button mat-icon-button (click)="openDialog(klijent)" aria-label="Izmijeni klijenta">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button (click)="deleteKlijent(klijent)" aria-label="Obriši klijenta">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      @if (klijenti().length === 0) {
+        <p class="empty-state">Nema klijenata.</p>
+      }
+    </div>
+  }
+</div>

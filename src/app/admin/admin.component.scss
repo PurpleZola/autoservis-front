@@ -65,6 +65,11 @@
     &:hover {
       background: rgba(0, 180, 216, 0.14);
     }
+
+    &.active-link {
+      background: rgba(0, 180, 216, 0.18);
+      border-left: 3px solid #00b4d8;
+    }
   }
 }
 
@@ -75,14 +80,4 @@
 
   --mat-sys-on-surface: #eef1f6;
   --mat-sys-on-surface-variant: #aab2c5;
-}
-
-.welcome-panel h1 {
-  margin: 0 0 0.5rem;
-  font: var(--mat-sys-headline-medium);
-}
-
-.welcome-panel p {
-  margin: 0;
-  color: var(--mat-sys-on-surface-variant);
 }

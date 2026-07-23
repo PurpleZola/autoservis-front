@@ -9,7 +9,17 @@ export const routes: Routes = [
   {
     path: 'admin',
     loadComponent: () => import('./admin/admin.component').then(m => m.AdminComponent),
-    canActivate: [authGuard]
+    canActivate: [authGuard],
+    children: [
+      {
+        path: '',
+        loadComponent: () => import('./admin/admin-home/admin-home.component').then(m => m.AdminHomeComponent)
+      },
+      {
+        path: 'klijenti',
+        loadComponent: () => import('./admin/klijenti/klijenti.component').then(m => m.KlijentiComponent)
+      }
+    ]
   },
   {
     path: 'user',

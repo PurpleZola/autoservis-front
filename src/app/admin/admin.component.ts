@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
@@ -12,12 +12,16 @@ import { AuthService } from '../services/auth.service';
 interface NavItem {
   icon: string;
   label: string;
+  route?: string;
 }
 
 @Component({
   selector: 'app-admin',
   standalone: true,
   imports: [
+    RouterLink,
+    RouterLinkActive,
+    RouterOutlet,
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
@@ -33,9 +37,9 @@ export class AdminComponent {
   private readonly router = inject(Router);
 
   readonly navItems: NavItem[] = [
-    { icon: 'dashboard', label: 'Pregled' },
+    { icon: 'dashboard', label: 'Pregled', route: '' },
     { icon: 'people', label: 'Korisnici' },
-    { icon: 'groups', label: 'Klijenti' },
+    { icon: 'groups', label: 'Klijenti', route: 'klijenti' },
     { icon: 'directions_car', label: 'Vozila' },
     { icon: 'build', label: 'Serviseri' },
     { icon: 'assignment', label: 'Servisni nalozi' },
