@@ -35,13 +35,17 @@
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="full-width">
-      <mat-label>ID korisnika</mat-label>
-      <input matInput type="number" formControlName="korisnikId" />
-      @if (form.controls.korisnikId.hasError('required') && form.controls.korisnikId.touched) {
-        <mat-error>ID korisnika je obavezan</mat-error>
+      <mat-label>Korisnik</mat-label>
+      <mat-select formControlName="korisnikId" panelClass="app-select-panel">
+        @for (korisnik of korisnici(); track korisnik.id) {
+          <mat-option [value]="korisnik.id">{{ korisnik.email }} ({{ korisnik.id }})</mat-option>
+        }
+      </mat-select>
+      @if (loadingKorisnici()) {
+        <mat-hint>Učitavanje korisnika...</mat-hint>
       }
-      @if (form.controls.korisnikId.hasError('min') && form.controls.korisnikId.touched) {
-        <mat-error>ID korisnika mora biti pozitivan broj</mat-error>
+      @if (form.controls.korisnikId.hasError('required') && form.controls.korisnikId.touched) {
+        <mat-error>Korisnik je obavezan</mat-error>
       }
     </mat-form-field>
   </div>

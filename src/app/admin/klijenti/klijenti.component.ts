@@ -72,7 +72,9 @@ export class KlijentiComponent implements OnInit {
 
       request.subscribe({
         next: () => this.loadKlijenti(),
-        error: () => this.errorMessage.set('Greška prilikom čuvanja klijenta.')
+        error: (err) => {
+          this.errorMessage.set(err?.error?.greska ?? 'Greška prilikom čuvanja klijenta.');
+        }
       });
     });
   }
