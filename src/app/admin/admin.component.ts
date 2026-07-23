@@ -38,7 +38,7 @@ export class AdminComponent {
 
   readonly navItems: NavItem[] = [
     { icon: 'dashboard', label: 'Pregled', route: '' },
-    { icon: 'people', label: 'Korisnici' },
+    { icon: 'people', label: 'Korisnici', route: 'korisnici' },
     { icon: 'groups', label: 'Klijenti', route: 'klijenti' },
     { icon: 'directions_car', label: 'Vozila' },
     { icon: 'build', label: 'Serviseri' },

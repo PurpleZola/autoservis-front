@@ -20,8 +20,8 @@ export class AuthService {
     return this.http.post<AuthResponse>(`${this.apiUrl}/login`, { email, lozinka });
   }
 
-  register(email: string, lozinka: string): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.apiUrl}/register`, { email, lozinka });
+  register(email: string, lozinka: string, rola?: string): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.apiUrl}/register`, { email, lozinka, rola });
   }
 
   saveToken(token: string): void {

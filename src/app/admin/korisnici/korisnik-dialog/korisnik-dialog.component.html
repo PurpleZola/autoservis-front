@@ -1,0 +1,45 @@
+<h2 mat-dialog-title>{{ isEditMode ? 'Izmijeni ulogu korisnika' : 'Dodaj korisnika' }}</h2>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div mat-dialog-content class="dialog-content">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" formControlName="email" />
+      @if (form.controls.email.hasError('required') && form.controls.email.touched) {
+        <mat-error>Email je obavezan</mat-error>
+      }
+      @if (form.controls.email.hasError('email') && form.controls.email.touched) {
+        <mat-error>Unesite ispravan email</mat-error>
+      }
+    </mat-form-field>
+
+    @if (!isEditMode) {
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Lozinka</mat-label>
+        <input matInput type="password" formControlName="lozinka" />
+        @if (form.controls.lozinka.hasError('required') && form.controls.lozinka.touched) {
+          <mat-error>Lozinka je obavezna</mat-error>
+        }
+        @if (form.controls.lozinka.hasError('minlength') && form.controls.lozinka.touched) {
+          <mat-error>Lozinka mora imati najmanje 4 karaktera</mat-error>
+        }
+      </mat-form-field>
+    }
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Rola</mat-label>
+      <mat-select formControlName="rola" panelClass="app-select-panel">
+        <mat-option value="ADMIN">ADMIN</mat-option>
+        <mat-option value="USER">USER</mat-option>
+      </mat-select>
+      @if (form.controls.rola.hasError('required') && form.controls.rola.touched) {
+        <mat-error>Rola je obavezna</mat-error>
+      }
+    </mat-form-field>
+  </div>
+
+  <div mat-dialog-actions align="end">
+    <button mat-button type="button" (click)="onCancel()">Otkaži</button>
+    <button mat-raised-button type="submit" class="save-button">Sačuvaj</button>
+  </div>
+</form>

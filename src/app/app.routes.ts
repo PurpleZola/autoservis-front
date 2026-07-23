@@ -18,6 +18,10 @@ export const routes: Routes = [
       {
         path: 'klijenti',
         loadComponent: () => import('./admin/klijenti/klijenti.component').then(m => m.KlijentiComponent)
+      },
+      {
+        path: 'korisnici',
+        loadComponent: () => import('./admin/korisnici/korisnici.component').then(m => m.KorisniciComponent)
       }
     ]
   },

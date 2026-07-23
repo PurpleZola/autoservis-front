@@ -56,7 +56,7 @@ export class KlijentiComponent implements OnInit {
       KlijentDialogComponent,
       {
         width: '480px',
-        panelClass: 'klijent-dialog-panel',
+        panelClass: 'app-dialog-panel',
         data: { klijent: klijent ?? null }
       }
     );

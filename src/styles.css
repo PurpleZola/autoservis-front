@@ -1,8 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 
-/* The dialog surface is rendered by the CDK overlay outside any component's
-   own view encapsulation, so it can only be restyled from a global sheet. */
-.klijent-dialog-panel .mat-mdc-dialog-surface {
+/* The dialog surface and select/menu overlay panels are rendered by the CDK
+   overlay outside any component's own view encapsulation, so they can only
+   be restyled from a global sheet. Shared by every add/edit dialog in the
+   admin area to keep them on the app's dark automotive theme. */
+.app-dialog-panel .mat-mdc-dialog-surface {
   background: rgba(22, 33, 62, 0.8);
   backdrop-filter: blur(20px) saturate(150%);
   -webkit-backdrop-filter: blur(20px) saturate(150%);
@@ -18,4 +20,15 @@
   --mat-sys-outline: rgba(255, 255, 255, 0.35);
   --mat-sys-outline-variant: rgba(255, 255, 255, 0.15);
   --mat-sys-error: #ff8a80;
+}
+
+.app-select-panel {
+  background: rgba(22, 33, 62, 0.95);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #eef1f6;
+
+  --mat-sys-on-surface: #eef1f6;
+  --mat-sys-surface-container: rgba(22, 33, 62, 0.95);
 }

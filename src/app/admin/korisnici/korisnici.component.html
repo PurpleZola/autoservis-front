@@ -1,0 +1,60 @@
+<div class="korisnici-page">
+  <div class="header-row">
+    <h1>Korisnici</h1>
+    <button mat-raised-button class="add-button" (click)="openDialog()">
+      <mat-icon>add</mat-icon>
+      Dodaj korisnika
+    </button>
+  </div>
+
+  @if (errorMessage()) {
+    <div class="error-banner">
+      <mat-icon>error_outline</mat-icon>
+      <span>{{ errorMessage() }}</span>
+    </div>
+  }
+
+  @if (loading()) {
+    <div class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+  } @else {
+    <div class="table-container">
+      <table mat-table [dataSource]="korisnici()" class="korisnici-table">
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef>ID</th>
+          <td mat-cell *matCellDef="let korisnik">{{ korisnik.id }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="email">
+          <th mat-header-cell *matHeaderCellDef>Email</th>
+          <td mat-cell *matCellDef="let korisnik">{{ korisnik.email }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="rola">
+          <th mat-header-cell *matHeaderCellDef>Rola</th>
+          <td mat-cell *matCellDef="let korisnik">{{ korisnik.rola }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Akcije</th>
+          <td mat-cell *matCellDef="let korisnik">
+            <button mat-icon-button (click)="openDialog(korisnik)" aria-label="Izmijeni korisnika">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button (click)="deleteKorisnik(korisnik)" aria-label="Obriši korisnika">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      @if (korisnici().length === 0) {
+        <p class="empty-state">Nema korisnika.</p>
+      }
+    </div>
+  }
+</div>
