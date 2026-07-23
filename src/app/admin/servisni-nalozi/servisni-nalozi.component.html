@@ -1,0 +1,75 @@
+<div class="servisni-nalozi-page">
+  <div class="header-row">
+    <h1>Servisni nalozi</h1>
+    <button mat-raised-button class="add-button" (click)="openDialog()">
+      <mat-icon>add</mat-icon>
+      Dodaj servisni nalog
+    </button>
+  </div>
+
+  @if (errorMessage()) {
+    <div class="error-banner">
+      <mat-icon>error_outline</mat-icon>
+      <span>{{ errorMessage() }}</span>
+    </div>
+  }
+
+  @if (loading()) {
+    <div class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+  } @else {
+    <div class="table-container">
+      <table mat-table [dataSource]="servisniNalozi()" class="servisni-nalozi-table">
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef>ID</th>
+          <td mat-cell *matCellDef="let nalog">{{ nalog.id }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="datumPrijema">
+          <th mat-header-cell *matHeaderCellDef>Datum prijema</th>
+          <td mat-cell *matCellDef="let nalog">{{ nalog.datumPrijema }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="datumZavrsetka">
+          <th mat-header-cell *matHeaderCellDef>Datum završetka</th>
+          <td mat-cell *matCellDef="let nalog">{{ nalog.datumZavrsetka }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="opisProblema">
+          <th mat-header-cell *matHeaderCellDef>Opis problema</th>
+          <td mat-cell *matCellDef="let nalog">{{ nalog.opisProblema }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let nalog">{{ nalog.status }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="sledeciServisDatum">
+          <th mat-header-cell *matHeaderCellDef>Sljedeći servis</th>
+          <td mat-cell *matCellDef="let nalog">{{ nalog.sledeciServisDatum }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Akcije</th>
+          <td mat-cell *matCellDef="let nalog">
+            <button mat-icon-button (click)="openDialog(nalog)" aria-label="Izmijeni servisni nalog">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button (click)="deleteServisniNalog(nalog)" aria-label="Obriši servisni nalog">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      @if (servisniNalozi().length === 0) {
+        <p class="empty-state">Nema servisnih naloga.</p>
+      }
+    </div>
+  }
+</div>

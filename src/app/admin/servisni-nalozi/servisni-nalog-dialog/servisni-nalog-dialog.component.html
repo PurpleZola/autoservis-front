@@ -1,0 +1,75 @@
+<h2 mat-dialog-title>{{ isEditMode ? 'Izmijeni servisni nalog' : 'Dodaj servisni nalog' }}</h2>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div mat-dialog-content class="dialog-content">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Datum prijema</mat-label>
+      <input matInput type="date" formControlName="datumPrijema" />
+      @if (form.controls.datumPrijema.hasError('required') && form.controls.datumPrijema.touched) {
+        <mat-error>Datum prijema je obavezan</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Datum završetka</mat-label>
+      <input matInput type="date" formControlName="datumZavrsetka" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Opis problema</mat-label>
+      <input matInput formControlName="opisProblema" />
+      @if (form.controls.opisProblema.hasError('required') && form.controls.opisProblema.touched) {
+        <mat-error>Opis problema je obavezan</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Status</mat-label>
+      <mat-select formControlName="status" panelClass="app-select-panel">
+        @for (opcija of statusOptions; track opcija) {
+          <mat-option [value]="opcija">{{ opcija }}</mat-option>
+        }
+      </mat-select>
+      @if (form.controls.status.hasError('required') && form.controls.status.touched) {
+        <mat-error>Status je obavezan</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Sljedeći servis</mat-label>
+      <input matInput type="date" formControlName="sledeciServisDatum" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Vozilo</mat-label>
+      <mat-select formControlName="voziloId" panelClass="app-select-panel">
+        @for (vozilo of vozila(); track vozilo.id) {
+          <mat-option [value]="vozilo.id">{{ vozilo.marka }} {{ vozilo.model }}</mat-option>
+        }
+      </mat-select>
+      @if (loadingOptions()) {
+        <mat-hint>Učitavanje...</mat-hint>
+      }
+      @if (form.controls.voziloId.hasError('required') && form.controls.voziloId.touched) {
+        <mat-error>Vozilo je obavezno</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Serviser</mat-label>
+      <mat-select formControlName="serviserID" panelClass="app-select-panel">
+        @for (serviser of serviseri(); track serviser.id) {
+          <mat-option [value]="serviser.id">{{ serviser.ime }} {{ serviser.prezime }}</mat-option>
+        }
+      </mat-select>
+      @if (form.controls.serviserID.hasError('required') && form.controls.serviserID.touched) {
+        <mat-error>Serviser je obavezan</mat-error>
+      }
+    </mat-form-field>
+  </div>
+
+  <div mat-dialog-actions align="end">
+    <button mat-button type="button" (click)="onCancel()">Otkaži</button>
+    <button mat-raised-button type="submit" class="save-button">Sačuvaj</button>
+  </div>
+</form>

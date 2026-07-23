@@ -1,0 +1,79 @@
+.racuni-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  h1 {
+    margin: 0;
+    font: var(--mat-sys-headline-medium);
+  }
+}
+
+.add-button {
+  border: none;
+  background-image: linear-gradient(135deg, #0f3460 0%, #00b4d8 100%);
+  color: #ffffff;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  box-shadow:
+    0 8px 24px rgba(0, 180, 216, 0.3),
+    0 2px 8px rgba(0, 0, 0, 0.25);
+
+  --mat-sys-primary: #ffffff;
+
+  mat-icon {
+    margin-right: 0.25rem;
+  }
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  padding: 3rem 0;
+}
+
+.table-container {
+  border-radius: 16px;
+  overflow: auto;
+  background: rgba(22, 33, 62, 0.55);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.35),
+    0 0 30px rgba(79, 209, 197, 0.06);
+}
+
+.racuni-table {
+  width: 100%;
+  background: transparent;
+  color: #eef1f6;
+
+  --mat-sys-on-surface: #eef1f6;
+  --mat-sys-on-surface-variant: #aab2c5;
+  --mat-sys-outline: rgba(255, 255, 255, 0.12);
+}
+
+.empty-state {
+  margin: 0;
+  padding: 1.5rem;
+  text-align: center;
+  color: var(--mat-sys-on-surface-variant);
+}
+
+.error-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #ff8a80;
+  background: rgba(255, 138, 128, 0.1);
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+}

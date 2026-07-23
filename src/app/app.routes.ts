@@ -26,6 +26,31 @@ export const routes: Routes = [
       {
         path: 'vozila',
         loadComponent: () => import('./admin/vozila/vozila.component').then(m => m.VozilaComponent)
+      },
+      {
+        path: 'serviseri',
+        loadComponent: () => import('./admin/serviseri/serviseri.component').then(m => m.ServiseriComponent)
+      },
+      {
+        path: 'servisni-nalozi',
+        loadComponent: () =>
+          import('./admin/servisni-nalozi/servisni-nalozi.component').then(m => m.ServisniNaloziComponent)
+      },
+      {
+        path: 'kvarovi',
+        loadComponent: () => import('./admin/kvarovi/kvarovi.component').then(m => m.KvaroviComponent)
+      },
+      {
+        path: 'usluge',
+        loadComponent: () => import('./admin/usluge/usluge.component').then(m => m.UslugeComponent)
+      },
+      {
+        path: 'dijelovi',
+        loadComponent: () => import('./admin/dijelovi/dijelovi.component').then(m => m.DijeloviComponent)
+      },
+      {
+        path: 'racuni',
+        loadComponent: () => import('./admin/racuni/racuni.component').then(m => m.RacuniComponent)
       }
     ]
   },

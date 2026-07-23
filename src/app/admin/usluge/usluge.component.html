@@ -1,0 +1,65 @@
+<div class="usluge-page">
+  <div class="header-row">
+    <h1>Usluge</h1>
+    <button mat-raised-button class="add-button" (click)="openDialog()">
+      <mat-icon>add</mat-icon>
+      Dodaj uslugu
+    </button>
+  </div>
+
+  @if (errorMessage()) {
+    <div class="error-banner">
+      <mat-icon>error_outline</mat-icon>
+      <span>{{ errorMessage() }}</span>
+    </div>
+  }
+
+  @if (loading()) {
+    <div class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+  } @else {
+    <div class="table-container">
+      <table mat-table [dataSource]="usluge()" class="usluge-table">
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef>ID</th>
+          <td mat-cell *matCellDef="let usluga">{{ usluga.id }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="naziv">
+          <th mat-header-cell *matHeaderCellDef>Naziv</th>
+          <td mat-cell *matCellDef="let usluga">{{ usluga.naziv }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="cijena">
+          <th mat-header-cell *matHeaderCellDef>Cijena</th>
+          <td mat-cell *matCellDef="let usluga">{{ usluga.cijena }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="servisniNalogId">
+          <th mat-header-cell *matHeaderCellDef>Servisni nalog</th>
+          <td mat-cell *matCellDef="let usluga">{{ usluga.servisniNalogId }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Akcije</th>
+          <td mat-cell *matCellDef="let usluga">
+            <button mat-icon-button (click)="openDialog(usluga)" aria-label="Izmijeni uslugu">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button (click)="deleteUsluga(usluga)" aria-label="Obriši uslugu">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      @if (usluge().length === 0) {
+        <p class="empty-state">Nema usluga.</p>
+      }
+    </div>
+  }
+</div>

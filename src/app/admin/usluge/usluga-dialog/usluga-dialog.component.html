@@ -1,0 +1,44 @@
+<h2 mat-dialog-title>{{ isEditMode ? 'Izmijeni uslugu' : 'Dodaj uslugu' }}</h2>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div mat-dialog-content class="dialog-content">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Naziv</mat-label>
+      <input matInput formControlName="naziv" />
+      @if (form.controls.naziv.hasError('required') && form.controls.naziv.touched) {
+        <mat-error>Naziv je obavezan</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Cijena</mat-label>
+      <input matInput type="number" formControlName="cijena" />
+      @if (form.controls.cijena.hasError('required') && form.controls.cijena.touched) {
+        <mat-error>Cijena je obavezna</mat-error>
+      }
+      @if (form.controls.cijena.hasError('min') && form.controls.cijena.touched) {
+        <mat-error>Cijena ne može biti negativna</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Servisni nalog</mat-label>
+      <mat-select formControlName="servisniNalogId" panelClass="app-select-panel">
+        @for (nalog of servisniNalozi(); track nalog.id) {
+          <mat-option [value]="nalog.id">{{ nalog.id }} - {{ nalog.opisProblema }}</mat-option>
+        }
+      </mat-select>
+      @if (loadingServisniNalozi()) {
+        <mat-hint>Učitavanje servisnih naloga...</mat-hint>
+      }
+      @if (form.controls.servisniNalogId.hasError('required') && form.controls.servisniNalogId.touched) {
+        <mat-error>Servisni nalog je obavezan</mat-error>
+      }
+    </mat-form-field>
+  </div>
+
+  <div mat-dialog-actions align="end">
+    <button mat-button type="button" (click)="onCancel()">Otkaži</button>
+    <button mat-raised-button type="submit" class="save-button">Sačuvaj</button>
+  </div>
+</form>

@@ -1,0 +1,65 @@
+<div class="kvarovi-page">
+  <div class="header-row">
+    <h1>Kvarovi</h1>
+    <button mat-raised-button class="add-button" (click)="openDialog()">
+      <mat-icon>add</mat-icon>
+      Dodaj kvar
+    </button>
+  </div>
+
+  @if (errorMessage()) {
+    <div class="error-banner">
+      <mat-icon>error_outline</mat-icon>
+      <span>{{ errorMessage() }}</span>
+    </div>
+  }
+
+  @if (loading()) {
+    <div class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+  } @else {
+    <div class="table-container">
+      <table mat-table [dataSource]="kvarovi()" class="kvarovi-table">
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef>ID</th>
+          <td mat-cell *matCellDef="let kvar">{{ kvar.id }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="naziv">
+          <th mat-header-cell *matHeaderCellDef>Naziv</th>
+          <td mat-cell *matCellDef="let kvar">{{ kvar.naziv }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="opis">
+          <th mat-header-cell *matHeaderCellDef>Opis</th>
+          <td mat-cell *matCellDef="let kvar">{{ kvar.opis }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="servisniNalogId">
+          <th mat-header-cell *matHeaderCellDef>Servisni nalog</th>
+          <td mat-cell *matCellDef="let kvar">{{ kvar.servisniNalogId }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Akcije</th>
+          <td mat-cell *matCellDef="let kvar">
+            <button mat-icon-button (click)="openDialog(kvar)" aria-label="Izmijeni kvar">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button (click)="deleteKvar(kvar)" aria-label="Obriši kvar">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      @if (kvarovi().length === 0) {
+        <p class="empty-state">Nema kvarova.</p>
+      }
+    </div>
+  }
+</div>

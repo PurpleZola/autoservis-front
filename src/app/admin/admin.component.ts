@@ -41,11 +41,12 @@ export class AdminComponent {
     { icon: 'people', label: 'Korisnici', route: 'korisnici' },
     { icon: 'groups', label: 'Klijenti', route: 'klijenti' },
     { icon: 'directions_car', label: 'Vozila', route: 'vozila' },
-    { icon: 'build', label: 'Serviseri' },
-    { icon: 'assignment', label: 'Servisni nalozi' },
-    { icon: 'report_problem', label: 'Kvarovi' },
-    { icon: 'home_repair_service', label: 'Usluge' },
-    { icon: 'receipt_long', label: 'Računi' }
+    { icon: 'build', label: 'Serviseri', route: 'serviseri' },
+    { icon: 'assignment', label: 'Servisni nalozi', route: 'servisni-nalozi' },
+    { icon: 'report_problem', label: 'Kvarovi', route: 'kvarovi' },
+    { icon: 'home_repair_service', label: 'Usluge', route: 'usluge' },
+    { icon: 'settings', label: 'Dijelovi', route: 'dijelovi' },
+    { icon: 'receipt_long', label: 'Računi', route: 'racuni' }
   ];
 
   logout(): void {
