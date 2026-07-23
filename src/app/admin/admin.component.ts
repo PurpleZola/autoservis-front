@@ -40,7 +40,7 @@ export class AdminComponent {
     { icon: 'dashboard', label: 'Pregled', route: '' },
     { icon: 'people', label: 'Korisnici', route: 'korisnici' },
     { icon: 'groups', label: 'Klijenti', route: 'klijenti' },
-    { icon: 'directions_car', label: 'Vozila' },
+    { icon: 'directions_car', label: 'Vozila', route: 'vozila' },
     { icon: 'build', label: 'Serviseri' },
     { icon: 'assignment', label: 'Servisni nalozi' },
     { icon: 'report_problem', label: 'Kvarovi' },

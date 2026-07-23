@@ -1,0 +1,95 @@
+<h2 mat-dialog-title>{{ isEditMode ? 'Izmijeni vozilo' : 'Dodaj vozilo' }}</h2>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div mat-dialog-content class="dialog-content">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Marka</mat-label>
+      <input matInput formControlName="marka" />
+      @if (form.controls.marka.hasError('required') && form.controls.marka.touched) {
+        <mat-error>Marka je obavezna</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Model</mat-label>
+      <input matInput formControlName="model" />
+      @if (form.controls.model.hasError('required') && form.controls.model.touched) {
+        <mat-error>Model je obavezan</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Godina</mat-label>
+      <input matInput type="number" formControlName="godina" />
+      @if (form.controls.godina.hasError('required') && form.controls.godina.touched) {
+        <mat-error>Godina je obavezna</mat-error>
+      }
+      @if (form.controls.godina.hasError('min') && form.controls.godina.touched) {
+        <mat-error>Godina nije ispravna</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Registracija</mat-label>
+      <input matInput formControlName="registracija" />
+      @if (form.controls.registracija.hasError('required') && form.controls.registracija.touched) {
+        <mat-error>Registracija je obavezna</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Boja</mat-label>
+      <input matInput formControlName="boja" />
+      @if (form.controls.boja.hasError('required') && form.controls.boja.touched) {
+        <mat-error>Boja je obavezna</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Broj šasije</mat-label>
+      <input matInput formControlName="brojSasije" />
+      @if (form.controls.brojSasije.hasError('required') && form.controls.brojSasije.touched) {
+        <mat-error>Broj šasije je obavezan</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Gorivo</mat-label>
+      <input matInput formControlName="gorivo" />
+      @if (form.controls.gorivo.hasError('required') && form.controls.gorivo.touched) {
+        <mat-error>Gorivo je obavezno</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Kilometraža</mat-label>
+      <input matInput type="number" formControlName="kilometraza" />
+      @if (form.controls.kilometraza.hasError('required') && form.controls.kilometraza.touched) {
+        <mat-error>Kilometraža je obavezna</mat-error>
+      }
+      @if (form.controls.kilometraza.hasError('min') && form.controls.kilometraza.touched) {
+        <mat-error>Kilometraža ne može biti negativna</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Klijent</mat-label>
+      <mat-select formControlName="klijentId" panelClass="app-select-panel">
+        @for (klijent of klijenti(); track klijent.id) {
+          <mat-option [value]="klijent.id">{{ klijent.ime }} {{ klijent.prezime }} ({{ klijent.id }})</mat-option>
+        }
+      </mat-select>
+      @if (loadingKlijenti()) {
+        <mat-hint>Učitavanje klijenata...</mat-hint>
+      }
+      @if (form.controls.klijentId.hasError('required') && form.controls.klijentId.touched) {
+        <mat-error>Klijent je obavezan</mat-error>
+      }
+    </mat-form-field>
+  </div>
+
+  <div mat-dialog-actions align="end">
+    <button mat-button type="button" (click)="onCancel()">Otkaži</button>
+    <button mat-raised-button type="submit" class="save-button">Sačuvaj</button>
+  </div>
+</form>

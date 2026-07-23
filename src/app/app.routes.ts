@@ -22,6 +22,10 @@ export const routes: Routes = [
       {
         path: 'korisnici',
         loadComponent: () => import('./admin/korisnici/korisnici.component').then(m => m.KorisniciComponent)
+      },
+      {
+        path: 'vozila',
+        loadComponent: () => import('./admin/vozila/vozila.component').then(m => m.VozilaComponent)
       }
     ]
   },
