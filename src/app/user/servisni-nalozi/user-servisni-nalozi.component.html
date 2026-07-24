@@ -1,0 +1,53 @@
+<div class="servisni-nalozi-page">
+  <div class="header-row">
+    <h1>Moji servisni nalozi</h1>
+  </div>
+
+  @if (errorMessage()) {
+    <div class="error-banner">
+      <mat-icon>error_outline</mat-icon>
+      <span>{{ errorMessage() }}</span>
+    </div>
+  }
+
+  @if (loading()) {
+    <div class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+  } @else {
+    <div class="table-container">
+      <table mat-table [dataSource]="redovi()" class="servisni-nalozi-table">
+        <ng-container matColumnDef="datumPrijema">
+          <th mat-header-cell *matHeaderCellDef>Datum prijema</th>
+          <td mat-cell *matCellDef="let red">{{ red.datumPrijema }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="opisProblema">
+          <th mat-header-cell *matHeaderCellDef>Opis problema</th>
+          <td mat-cell *matCellDef="let red">{{ red.opisProblema }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let red">
+            <mat-chip [class]="'status-chip status-' + red.status" disableRipple>
+              {{ red.status }}
+            </mat-chip>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="serviser">
+          <th mat-header-cell *matHeaderCellDef>Serviser</th>
+          <td mat-cell *matCellDef="let red">{{ red.serviser }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      @if (redovi().length === 0) {
+        <p class="empty-state">Nemate servisnih naloga.</p>
+      }
+    </div>
+  }
+</div>

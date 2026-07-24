@@ -62,7 +62,32 @@ export const routes: Routes = [
   {
     path: 'user',
     loadComponent: () => import('./user/user.component').then(m => m.UserComponent),
-    canActivate: [authGuard]
+    canActivate: [authGuard],
+    children: [
+      {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full'
+      },
+      {
+        path: 'dashboard',
+        loadComponent: () =>
+          import('./user/dashboard/user-dashboard.component').then(m => m.UserDashboardComponent)
+      },
+      {
+        path: 'vozila',
+        loadComponent: () => import('./user/vozila/user-vozila.component').then(m => m.UserVozilaComponent)
+      },
+      {
+        path: 'servisni-nalozi',
+        loadComponent: () =>
+          import('./user/servisni-nalozi/user-servisni-nalozi.component').then(m => m.UserServisniNaloziComponent)
+      },
+      {
+        path: 'racuni',
+        loadComponent: () => import('./user/racuni/user-racuni.component').then(m => m.UserRacuniComponent)
+      }
+    ]
   },
   {
     path: '',

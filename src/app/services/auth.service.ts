@@ -41,6 +41,25 @@ export class AuthService {
     return localStorage.getItem('rola');
   }
 
+  getEmail(): string | null {
+    const token = this.getToken();
+    if (!token) {
+      return null;
+    }
+
+    try {
+      const payload = token.split('.')[1];
+      const base64 = payload.replace(/-/g, '+').replace(/_/g, '/');
+      // JWT segments are base64url without padding; atob() throws on
+      // unpadded input whose length isn't a multiple of 4, so pad it back.
+      const padded = base64 + '='.repeat((4 - (base64.length % 4)) % 4);
+      const decoded = JSON.parse(atob(padded));
+      return decoded.sub ?? null;
+    } catch {
+      return null;
+    }
+  }
+
   logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('rola');

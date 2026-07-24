@@ -12,7 +12,12 @@
   <mat-sidenav mode="side" opened class="sidenav">
     <mat-nav-list>
       @for (item of navItems; track item.label) {
-        <a mat-list-item>
+        <a
+          mat-list-item
+          [routerLink]="[item.route]"
+          routerLinkActive="active-link"
+          [routerLinkActiveOptions]="{ exact: item.route === 'dashboard' }"
+        >
           <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
           <span matListItemTitle>{{ item.label }}</span>
         </a>
@@ -21,9 +26,6 @@
   </mat-sidenav>
 
   <mat-sidenav-content class="content">
-    <div class="welcome-panel">
-      <h1>Dobrodošli</h1>
-      <p>Odaberite opciju iz bočnog menija za pregled vaših podataka.</p>
-    </div>
+    <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
