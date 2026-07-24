@@ -13,7 +13,12 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        loadComponent: () => import('./admin/admin-home/admin-home.component').then(m => m.AdminHomeComponent)
+        redirectTo: 'dashboard',
+        pathMatch: 'full'
+      },
+      {
+        path: 'dashboard',
+        loadComponent: () => import('./admin/dashboard/admin-dashboard.component').then(m => m.AdminDashboardComponent)
       },
       {
         path: 'klijenti',

@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 export interface AuthResponse {
   token: string;
   rola: string;
+  id?: number;
 }
 
 @Injectable({

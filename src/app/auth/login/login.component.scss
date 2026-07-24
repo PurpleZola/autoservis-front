@@ -58,6 +58,36 @@
     height: 3px;
     background: linear-gradient(90deg, transparent, var(--mat-sys-primary), transparent);
   }
+
+  // Register mode has more than double the fields of login, so it gets a
+  // wider card (room for the 2-column rows) and a capped, scrollable content
+  // area instead of pushing the card past the viewport on short screens.
+  &.register-card {
+    max-width: 460px;
+  }
+}
+
+.register-content {
+  max-height: min(78dvh, 640px);
+  overflow-y: auto;
+  padding-right: 0.35rem;
+  margin-right: -0.35rem;
+
+  scrollbar-width: thin;
+  scrollbar-color: rgba(79, 209, 197, 0.35) transparent;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(79, 209, 197, 0.35);
+    border-radius: 999px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
 }
 
 .login-form {
@@ -65,6 +95,53 @@
   flex-direction: column;
   gap: 0.25rem;
   margin-top: 1rem;
+}
+
+.register-form {
+  gap: 0.1rem;
+
+  // Angular Material's default outlined field infix/subscript sizing is
+  // generous enough that six fields plus password-match errors overflow a
+  // compact card; shrink both scoped to this form only via ::ng-deep so the
+  // login form (2 fields) keeps its normal, more comfortable sizing.
+  ::ng-deep {
+    .mat-mdc-text-field-wrapper {
+      --mat-form-field-container-height: 48px;
+    }
+
+    .mat-mdc-form-field-infix {
+      min-height: 48px;
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+
+    .mat-mdc-form-field-subscript-wrapper {
+      font-size: 0.7rem;
+      line-height: 1.2;
+      min-height: 0;
+      margin-top: 1px;
+    }
+
+    .mat-mdc-form-field-icon-prefix {
+      padding-right: 6px;
+
+      > .mat-icon {
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+      }
+    }
+  }
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+}
+
+.half-width {
+  width: 100%;
 }
 
 .full-width {
@@ -113,6 +190,26 @@
     background-image: linear-gradient(135deg, rgba(15, 52, 96, 0.6), rgba(0, 180, 216, 0.6));
     color: rgba(255, 255, 255, 0.75);
     box-shadow: none;
+  }
+}
+
+.switch-mode {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  margin-top: 0.75rem;
+  font-size: 0.875rem;
+  color: #aab2c5;
+
+  a {
+    color: #4fd1c5;
+    font-weight: 600;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }
 

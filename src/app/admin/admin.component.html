@@ -15,9 +15,9 @@
         @if (item.route !== undefined) {
           <a
             mat-list-item
-            [routerLink]="['/admin', item.route]"
+            [routerLink]="[item.route]"
             routerLinkActive="active-link"
-            [routerLinkActiveOptions]="{ exact: item.route === '' }"
+            [routerLinkActiveOptions]="{ exact: item.route === 'dashboard' }"
           >
             <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
             <span matListItemTitle>{{ item.label }}</span>

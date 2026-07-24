@@ -1,0 +1,120 @@
+<div class="dashboard-page">
+  @if (errorMessage()) {
+    <div class="error-banner">
+      <mat-icon>error_outline</mat-icon>
+      <span>{{ errorMessage() }}</span>
+    </div>
+  }
+
+  @if (loading()) {
+    <div class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+  } @else {
+    <div class="stats-grid">
+      <mat-card class="stat-card">
+        <mat-icon class="stat-icon">groups</mat-icon>
+        <div class="stat-value">{{ klijentiCount() }}</div>
+        <div class="stat-label">Klijenti</div>
+      </mat-card>
+
+      <mat-card class="stat-card">
+        <mat-icon class="stat-icon">directions_car</mat-icon>
+        <div class="stat-value">{{ vozilaCount() }}</div>
+        <div class="stat-label">Vozila</div>
+      </mat-card>
+
+      <mat-card class="stat-card">
+        <mat-icon class="stat-icon">build</mat-icon>
+        <div class="stat-value">{{ serviseriCount() }}</div>
+        <div class="stat-label">Serviseri</div>
+      </mat-card>
+
+      <mat-card class="stat-card">
+        <mat-icon class="stat-icon">assignment</mat-icon>
+        <div class="stat-value">{{ servisniNaloziCount() }}</div>
+        <div class="stat-label">Servisni nalozi</div>
+      </mat-card>
+    </div>
+
+    <div class="section">
+      <h2>Nedavni servisni nalozi</h2>
+      <div class="table-container">
+        <table mat-table [dataSource]="recentServisniNalozi()" class="dashboard-table">
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef>ID</th>
+            <td mat-cell *matCellDef="let nalog">{{ nalog.id }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="opisProblema">
+            <th mat-header-cell *matHeaderCellDef>Opis problema</th>
+            <td mat-cell *matCellDef="let nalog">{{ nalog.opisProblema }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef>Status</th>
+            <td mat-cell *matCellDef="let nalog">
+              <mat-chip [class]="'status-chip status-' + nalog.status" disableRipple>
+                {{ nalog.status }}
+              </mat-chip>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="datumPrijema">
+            <th mat-header-cell *matHeaderCellDef>Datum prijema</th>
+            <td mat-cell *matCellDef="let nalog">{{ nalog.datumPrijema }}</td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        @if (recentServisniNalozi().length === 0) {
+          <p class="empty-state">Nema servisnih naloga.</p>
+        }
+      </div>
+    </div>
+
+    <div class="two-column">
+      <div class="section">
+        <h2>
+          <mat-icon class="warning-icon">warning</mat-icon>
+          Nisko stanje dijelova
+        </h2>
+        <div class="panel warning-panel">
+          @if (niskoStanjeDijelovi().length === 0) {
+            <p class="empty-state">Svi dijelovi imaju dovoljno zaliha.</p>
+          } @else {
+            @for (dio of niskoStanjeDijelovi(); track dio.id) {
+              <div class="alert-row">
+                <span class="alert-name">{{ dio.naziv }}</span>
+                <span class="alert-detail">{{ dio.kolicinaNaStanju }} / min. {{ dio.minimalnaKolicina }}</span>
+              </div>
+            }
+          }
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>
+          <mat-icon class="reminder-icon">event</mat-icon>
+          Podsjetnici za servis
+        </h2>
+        <div class="panel reminder-panel">
+          @if (podsjetnici().length === 0) {
+            <p class="empty-state">Nema nadolazećih servisa u sljedećih 30 dana.</p>
+          } @else {
+            @for (podsjetnik of podsjetnici(); track podsjetnik.vozilo.id) {
+              <div class="alert-row">
+                <span class="alert-name">
+                  {{ podsjetnik.vozilo.marka }} {{ podsjetnik.vozilo.model }} ({{ podsjetnik.vozilo.registracija }})
+                </span>
+                <span class="alert-detail">{{ podsjetnik.sledeciServisDatum }}</span>
+              </div>
+            }
+          }
+        </div>
+      </div>
+    </div>
+  }
+</div>

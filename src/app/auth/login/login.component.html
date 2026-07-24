@@ -1,71 +1,228 @@
 <div class="login-page">
-  <mat-card class="login-card" appearance="raised">
-    <mat-card-header>
-      <mat-card-title>Auto Servis</mat-card-title>
-      <mat-card-subtitle>Prijavite se na svoj nalog</mat-card-subtitle>
-    </mat-card-header>
+  <mat-card class="login-card" [class.register-card]="mode() === 'register'" appearance="raised">
+    @if (mode() === 'login') {
+      <mat-card-header>
+        <mat-card-title>Auto Servis</mat-card-title>
+        <mat-card-subtitle>Prijavite se na svoj nalog</mat-card-subtitle>
+      </mat-card-header>
 
-    <mat-card-content>
-      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="login-form">
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Email</mat-label>
-          <input matInput type="email" formControlName="email" autocomplete="email" />
-          <mat-icon matPrefix>mail</mat-icon>
-          @if (form.controls.email.hasError('required') && form.controls.email.touched) {
-            <mat-error>Email je obavezan</mat-error>
-          }
-          @if (form.controls.email.hasError('email') && form.controls.email.touched) {
-            <mat-error>Unesite ispravan email</mat-error>
-          }
-        </mat-form-field>
+      <mat-card-content>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="login-form">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" formControlName="email" autocomplete="email" />
+            <mat-icon matPrefix>mail</mat-icon>
+            @if (form.controls.email.hasError('required') && form.controls.email.touched) {
+              <mat-error>Email je obavezan</mat-error>
+            }
+            @if (form.controls.email.hasError('email') && form.controls.email.touched) {
+              <mat-error>Unesite ispravan email</mat-error>
+            }
+          </mat-form-field>
 
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Lozinka</mat-label>
-          <input
-            matInput
-            [type]="hidePassword() ? 'password' : 'text'"
-            formControlName="lozinka"
-            autocomplete="current-password"
-          />
-          <mat-icon matPrefix>lock</mat-icon>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Lozinka</mat-label>
+            <input
+              matInput
+              [type]="hidePassword() ? 'password' : 'text'"
+              formControlName="lozinka"
+              autocomplete="current-password"
+            />
+            <mat-icon matPrefix>lock</mat-icon>
+            <button
+              mat-icon-button
+              matSuffix
+              type="button"
+              (click)="togglePasswordVisibility($event)"
+              [attr.aria-label]="'Prikaži lozinku'"
+              [attr.aria-pressed]="!hidePassword()"
+            >
+              <mat-icon>{{ hidePassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+            @if (form.controls.lozinka.hasError('required') && form.controls.lozinka.touched) {
+              <mat-error>Lozinka je obavezna</mat-error>
+            }
+            @if (form.controls.lozinka.hasError('minlength') && form.controls.lozinka.touched) {
+              <mat-error>Lozinka mora imati najmanje 4 karaktera</mat-error>
+            }
+          </mat-form-field>
+
+          @if (errorMessage()) {
+            <div class="error-banner">
+              <mat-icon>error_outline</mat-icon>
+              <span>{{ errorMessage() }}</span>
+            </div>
+          }
+
           <button
-            mat-icon-button
-            matSuffix
-            type="button"
-            (click)="togglePasswordVisibility($event)"
-            [attr.aria-label]="'Prikaži lozinku'"
-            [attr.aria-pressed]="!hidePassword()"
+            mat-raised-button
+            type="submit"
+            class="full-width submit-button"
+            [disabled]="loading()"
           >
-            <mat-icon>{{ hidePassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+            @if (loading()) {
+              <mat-spinner diameter="20"></mat-spinner>
+            } @else {
+              <span>Prijavi se</span>
+            }
           </button>
-          @if (form.controls.lozinka.hasError('required') && form.controls.lozinka.touched) {
-            <mat-error>Lozinka je obavezna</mat-error>
-          }
-          @if (form.controls.lozinka.hasError('minlength') && form.controls.lozinka.touched) {
-            <mat-error>Lozinka mora imati najmanje 4 karaktera</mat-error>
-          }
-        </mat-form-field>
 
-        @if (errorMessage()) {
-          <div class="error-banner">
-            <mat-icon>error_outline</mat-icon>
-            <span>{{ errorMessage() }}</span>
+          <div class="switch-mode">
+            <span>Nemate nalog?</span>
+            <a href="" (click)="switchMode('register', $event)">Registrujte se</a>
           </div>
-        }
+        </form>
+      </mat-card-content>
+    } @else {
+      <mat-card-header>
+        <mat-card-title>Auto Servis</mat-card-title>
+        <mat-card-subtitle>Kreirajte novi nalog</mat-card-subtitle>
+      </mat-card-header>
 
-        <button
-          mat-raised-button
-          type="submit"
-          class="full-width submit-button"
-          [disabled]="loading()"
-        >
-          @if (loading()) {
-            <mat-spinner diameter="20"></mat-spinner>
-          } @else {
-            <span>Prijavi se</span>
+      <mat-card-content class="register-content">
+        <form [formGroup]="registerForm" (ngSubmit)="onRegisterSubmit()" class="login-form register-form">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Email</mat-label>
+            <input matInput type="email" formControlName="email" autocomplete="email" />
+            <mat-icon matPrefix>mail</mat-icon>
+            @if (registerForm.controls.email.hasError('required') && registerForm.controls.email.touched) {
+              <mat-error>Email je obavezan</mat-error>
+            }
+            @if (registerForm.controls.email.hasError('pattern') && registerForm.controls.email.touched) {
+              <mat-error>Unesite ispravan email (npr. ime&#64;domen.com)</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Lozinka</mat-label>
+            <input
+              matInput
+              [type]="hideRegisterPassword() ? 'password' : 'text'"
+              formControlName="lozinka"
+              autocomplete="new-password"
+            />
+            <mat-icon matPrefix>lock</mat-icon>
+            <button
+              mat-icon-button
+              matSuffix
+              type="button"
+              (click)="toggleRegisterPasswordVisibility($event)"
+              [attr.aria-label]="'Prikaži lozinku'"
+              [attr.aria-pressed]="!hideRegisterPassword()"
+            >
+              <mat-icon>{{ hideRegisterPassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+            @if (registerForm.controls.lozinka.hasError('required') && registerForm.controls.lozinka.touched) {
+              <mat-error>Lozinka je obavezna</mat-error>
+            }
+            @if (registerForm.controls.lozinka.hasError('pattern') && registerForm.controls.lozinka.touched) {
+              <mat-error>Lozinka mora imati najmanje 8 karaktera, jedno veliko slovo i jedan broj</mat-error>
+            }
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Potvrda lozinke</mat-label>
+            <input
+              matInput
+              [type]="hideConfirmPassword() ? 'password' : 'text'"
+              formControlName="potvrdaLozinke"
+              autocomplete="new-password"
+            />
+            <mat-icon matPrefix>lock</mat-icon>
+            <button
+              mat-icon-button
+              matSuffix
+              type="button"
+              (click)="toggleConfirmPasswordVisibility($event)"
+              [attr.aria-label]="'Prikaži lozinku'"
+              [attr.aria-pressed]="!hideConfirmPassword()"
+            >
+              <mat-icon>{{ hideConfirmPassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+            @if (registerForm.controls.potvrdaLozinke.hasError('required') && registerForm.controls.potvrdaLozinke.touched) {
+              <mat-error>Potvrda lozinke je obavezna</mat-error>
+            }
+            @if (
+              !registerForm.controls.potvrdaLozinke.hasError('required') &&
+              registerForm.hasError('passwordMismatch') &&
+              registerForm.controls.potvrdaLozinke.touched
+            ) {
+              <mat-error>Lozinke se ne podudaraju</mat-error>
+            }
+          </mat-form-field>
+
+          <div class="field-row">
+            <mat-form-field appearance="outline" class="half-width">
+              <mat-label>Ime</mat-label>
+              <input matInput type="text" formControlName="ime" autocomplete="given-name" />
+              <mat-icon matPrefix>person</mat-icon>
+              @if (registerForm.controls.ime.hasError('required') && registerForm.controls.ime.touched) {
+                <mat-error>Ime je obavezno</mat-error>
+              }
+              @if (registerForm.controls.ime.hasError('pattern') && registerForm.controls.ime.touched) {
+                <mat-error>Samo slova i razmaci, min. 2 karaktera</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="half-width">
+              <mat-label>Prezime</mat-label>
+              <input matInput type="text" formControlName="prezime" autocomplete="family-name" />
+              <mat-icon matPrefix>badge</mat-icon>
+              @if (registerForm.controls.prezime.hasError('required') && registerForm.controls.prezime.touched) {
+                <mat-error>Prezime je obavezno</mat-error>
+              }
+              @if (registerForm.controls.prezime.hasError('pattern') && registerForm.controls.prezime.touched) {
+                <mat-error>Samo slova i razmaci, min. 2 karaktera</mat-error>
+              }
+            </mat-form-field>
+          </div>
+
+          <div class="field-row">
+            <mat-form-field appearance="outline" class="half-width">
+              <mat-label>Telefon (opciono)</mat-label>
+              <input matInput type="tel" formControlName="telefon" autocomplete="tel" />
+              <mat-icon matPrefix>phone</mat-icon>
+              @if (registerForm.controls.telefon.hasError('telefonFormat') && registerForm.controls.telefon.touched) {
+                <mat-error>Neispravan format telefona</mat-error>
+              }
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="half-width">
+              <mat-label>Adresa (opciono)</mat-label>
+              <input matInput type="text" formControlName="adresa" autocomplete="street-address" />
+              <mat-icon matPrefix>home</mat-icon>
+              @if (registerForm.controls.adresa.hasError('adresaFormat') && registerForm.controls.adresa.touched) {
+                <mat-error>Nedozvoljeni karakteri</mat-error>
+              }
+            </mat-form-field>
+          </div>
+
+          @if (errorMessage()) {
+            <div class="error-banner">
+              <mat-icon>error_outline</mat-icon>
+              <span>{{ errorMessage() }}</span>
+            </div>
           }
-        </button>
-      </form>
-    </mat-card-content>
+
+          <button
+            mat-raised-button
+            type="submit"
+            class="full-width submit-button"
+            [disabled]="loading()"
+          >
+            @if (loading()) {
+              <mat-spinner diameter="20"></mat-spinner>
+            } @else {
+              <span>Registruj se</span>
+            }
+          </button>
+
+          <div class="switch-mode">
+            <span>Već imate nalog?</span>
+            <a href="" (click)="switchMode('login', $event)">Prijavite se</a>
+          </div>
+        </form>
+      </mat-card-content>
+    }
   </mat-card>
 </div>

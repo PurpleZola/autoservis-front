@@ -37,7 +37,7 @@ export class AdminComponent {
   private readonly router = inject(Router);
 
   readonly navItems: NavItem[] = [
-    { icon: 'dashboard', label: 'Pregled', route: '' },
+    { icon: 'dashboard', label: 'Pregled', route: 'dashboard' },
     { icon: 'people', label: 'Korisnici', route: 'korisnici' },
     { icon: 'groups', label: 'Klijenti', route: 'klijenti' },
     { icon: 'directions_car', label: 'Vozila', route: 'vozila' },
