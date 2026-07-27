@@ -23,6 +23,11 @@
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "favicon.svg",
+                "input": "src",
+                "output": "/"
               }
             ],
             "styles": ["src/material-theme.scss", "src/styles.css"]

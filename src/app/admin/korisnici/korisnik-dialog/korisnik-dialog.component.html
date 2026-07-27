@@ -9,7 +9,7 @@
         <mat-error>Email je obavezan</mat-error>
       }
       @if (form.controls.email.hasError('email') && form.controls.email.touched) {
-        <mat-error>Unesite ispravan email</mat-error>
+        <mat-error>Email format nije ispravan</mat-error>
       }
     </mat-form-field>
 
@@ -21,7 +21,7 @@
           <mat-error>Lozinka je obavezna</mat-error>
         }
         @if (form.controls.lozinka.hasError('minlength') && form.controls.lozinka.touched) {
-          <mat-error>Lozinka mora imati najmanje 4 karaktera</mat-error>
+          <mat-error>Lozinka mora imati minimum 8 karaktera</mat-error>
         }
       </mat-form-field>
     }

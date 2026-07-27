@@ -10,13 +10,21 @@ html {
   @include mat.theme(
     (
       color: (
-        primary: mat.$cyan-palette,
+        primary: mat.$orange-palette,
         tertiary: mat.$orange-palette,
       ),
       typography: Roboto,
       density: 0,
     )
   );
+
+  // Angular Material's generated tonal palette for "orange" doesn't land on
+  // the exact Midas-style brand hex, so pin the tokens the app actually
+  // relies on (buttons, focus rings, spinners) to the precise brand colors.
+  --mat-sys-primary: #ff6600;
+  --mat-sys-on-primary: #ffffff;
+  --mat-sys-primary-container: #e65c00;
+  --mat-sys-on-primary-container: #ffffff;
 }
 
 body {
@@ -28,8 +36,8 @@ body {
   // Set a default background, font and text colors for the application using
   // Angular Material's system-level CSS variables. Learn more about these
   // variables at https://material.angular.dev/guide/system-variables
-  background-color: var(--mat-sys-surface);
-  color: var(--mat-sys-on-surface);
+  background-color: #f5f5f5;
+  color: #2c2c2c;
   font: var(--mat-sys-body-medium);
 
   // Reset the user agent margin.

@@ -1,34 +1,40 @@
 /* You can add global styles to this file, and also import other style files */
 
+/* Brand-wide validation error color. Angular Material's mat-error text,
+   invalid input outline/label, and caret all read from this system token
+   (see @angular/material/form-field/_m3-form-field.scss), so overriding it
+   here recolors every mat-error across the app from red to brand orange in
+   one place instead of per component. */
+:root {
+  --mat-sys-error: #e65c00;
+  --mat-sys-on-error-container: #b34700;
+}
+
 /* The dialog surface and select/menu overlay panels are rendered by the CDK
    overlay outside any component's own view encapsulation, so they can only
    be restyled from a global sheet. Shared by every add/edit dialog in the
-   admin area to keep them on the app's dark automotive theme. */
+   admin area to keep them on the app's light, professional automotive
+   service theme. */
 .app-dialog-panel .mat-mdc-dialog-surface {
-  background: rgba(22, 33, 62, 0.8);
-  backdrop-filter: blur(20px) saturate(150%);
-  -webkit-backdrop-filter: blur(20px) saturate(150%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 16px;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
   box-shadow:
-    0 20px 60px rgba(0, 0, 0, 0.5),
-    0 0 40px rgba(79, 209, 197, 0.1);
-  color: #eef1f6;
+    0 20px 48px rgba(0, 0, 0, 0.16),
+    0 2px 8px rgba(0, 0, 0, 0.08);
+  color: #2c2c2c;
 
-  --mat-sys-on-surface: #eef1f6;
-  --mat-sys-on-surface-variant: #aab2c5;
-  --mat-sys-outline: rgba(255, 255, 255, 0.35);
-  --mat-sys-outline-variant: rgba(255, 255, 255, 0.15);
-  --mat-sys-error: #ff8a80;
+  --mat-sys-on-surface: #2c2c2c;
+  --mat-sys-on-surface-variant: #6b6b6b;
+  --mat-sys-outline: rgba(0, 0, 0, 0.3);
+  --mat-sys-outline-variant: rgba(0, 0, 0, 0.12);
 }
 
 .app-select-panel {
-  background: rgba(22, 33, 62, 0.95);
-  backdrop-filter: blur(20px) saturate(150%);
-  -webkit-backdrop-filter: blur(20px) saturate(150%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  color: #eef1f6;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  color: #2c2c2c;
 
-  --mat-sys-on-surface: #eef1f6;
-  --mat-sys-surface-container: rgba(22, 33, 62, 0.95);
+  --mat-sys-on-surface: #2c2c2c;
+  --mat-sys-surface-container: #ffffff;
 }

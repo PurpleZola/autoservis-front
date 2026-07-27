@@ -46,7 +46,7 @@ export class KorisnikDialogComponent {
       { value: this.data.korisnik?.email ?? '', disabled: this.isEditMode },
       this.isEditMode ? [] : [Validators.required, Validators.email]
     ],
-    lozinka: ['', this.isEditMode ? [] : [Validators.required, Validators.minLength(4)]],
+    lozinka: ['', this.isEditMode ? [] : [Validators.required, Validators.minLength(8)]],
     rola: [this.data.korisnik?.rola ?? 'USER', Validators.required]
   });
 

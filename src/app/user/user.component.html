@@ -1,7 +1,10 @@
 <mat-toolbar color="primary" class="toolbar">
-  <span class="brand">Auto Servis</span>
+  <span class="brand">
+    <mat-icon class="brand-icon">build</mat-icon>
+    Auto Servis
+  </span>
   <span class="spacer"></span>
-  <span class="role-badge">Korisnik</span>
+  <span class="user-badge">{{ displayLabel() }}</span>
   <button mat-button (click)="logout()">
     <mat-icon>logout</mat-icon>
     Odjava
