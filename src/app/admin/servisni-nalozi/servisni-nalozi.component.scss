@@ -56,6 +56,31 @@
   --mat-sys-outline: rgba(0, 0, 0, 0.12);
 }
 
+.status-chip {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  border: 1px solid transparent;
+
+  &.status-PRIMLJEN {
+    background: #ECEFF1;
+    border-color: #B0BEC5;
+    color: #37474F;
+  }
+
+  &.status-U_RADU {
+    background: #FFF3E0;
+    border-color: #FFB74D;
+    color: #E65100;
+  }
+
+  &.status-ZAVRSEN {
+    background: #E8F5E9;
+    border-color: #81C784;
+    color: #2E7D32;
+  }
+}
+
 .empty-state {
   margin: 0;
   padding: 1.5rem;

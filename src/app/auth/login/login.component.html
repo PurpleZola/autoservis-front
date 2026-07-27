@@ -116,7 +116,7 @@
               <mat-error>Lozinka je obavezna</mat-error>
             }
             @if (registerForm.controls.lozinka.hasError('pattern') && registerForm.controls.lozinka.touched) {
-              <mat-error>Lozinka mora imati minimum 8 karaktera</mat-error>
+              <mat-error>Lozinka mora imati minimum 8 karaktera, jedno veliko slovo i jedan broj</mat-error>
             }
           </mat-form-field>
 
@@ -180,7 +180,13 @@
           <div class="field-row">
             <mat-form-field appearance="outline" class="half-width">
               <mat-label>Telefon (opciono)</mat-label>
-              <input matInput type="tel" formControlName="telefon" autocomplete="tel" />
+              <input
+                matInput
+                type="tel"
+                formControlName="telefon"
+                autocomplete="tel"
+                placeholder="+381 6X XXX XXXX"
+              />
               <mat-icon matPrefix>phone</mat-icon>
               @if (registerForm.controls.telefon.hasError('telefonFormat') && registerForm.controls.telefon.touched) {
                 <mat-error>Telefon nije u ispravnom formatu</mat-error>

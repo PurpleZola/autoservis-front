@@ -77,14 +77,20 @@ export class LoginComponent {
 
   readonly form = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
-    lozinka: ['', [Validators.required, Validators.minLength(4)]]
+    // updateOn: 'blur' so the minlength error only appears once the user
+    // leaves the field, instead of flashing on every keystroke while they're
+    // still typing the password.
+    lozinka: ['', { validators: [Validators.required, Validators.minLength(4)], updateOn: 'blur' }]
   });
 
   readonly registerForm = this.fb.group(
     {
       email: ['', [Validators.required, Validators.pattern(EMAIL_PATTERN)]],
-      lozinka: ['', [Validators.required, Validators.pattern(LOZINKA_PATTERN)]],
-      potvrdaLozinke: ['', [Validators.required]],
+      // Same as above: the 8-char/uppercase/digit pattern can't be satisfied
+      // by the first few keystrokes, so validating live made the error
+      // appear the instant a lowercase letter was typed.
+      lozinka: ['', { validators: [Validators.required, Validators.pattern(LOZINKA_PATTERN)], updateOn: 'blur' }],
+      potvrdaLozinke: ['', { validators: [Validators.required], updateOn: 'blur' }],
       ime: ['', [Validators.required, Validators.pattern(IME_PATTERN)]],
       prezime: ['', [Validators.required, Validators.pattern(IME_PATTERN)]],
       telefon: ['', [telefonFormatValidator]],
