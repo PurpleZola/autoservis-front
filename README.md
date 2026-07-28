@@ -1,59 +1,41 @@
-# AutoservisFrontend
+# Auto Servis - Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.13.
+Frontend dio aplikacije za upravljanje auto servisom (diplomski projekat). Angular aplikacija sa admin i korisničkim panelom - prijava/registracija, upravljanje klijentima, vozilima, serviserima, servisnim nalozima, kvarovima, uslugama, dijelovima i računima, kao i AI analiza vozila.
 
-## Development server
+## Tehnologije
 
-To start a local development server, run:
+- Angular (standalone komponente, signals)
+- Angular Material
+- TypeScript
+- RxJS
 
-```bash
-ng serve
-```
+## Kako pokrenuti
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+1. Instalirati zavisnosti:
 
-## Code scaffolding
+   ```
+   npm install
+   ```
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+2. Pokrenuti razvojni server:
 
-```bash
-ng generate component component-name
-```
+   ```
+   npm start
+   ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+3. Otvoriti u browseru: `http://localhost:4200`
 
-```bash
-ng generate --help
-```
+Napomena: backend URL je hardkodiran u servisima (`http://localhost:8080/api/...`), tako da backend mora biti pokrenut prije korištenja aplikacije.
 
-## Building
+## Portovi
 
-To build the project run:
+| Servis                 | Port |
+|-------------------------|------|
+| Frontend (Angular)      | 4200 |
+| Backend (Spring Boot)   | 8080 |
+| AI servis (Flask)       | 5000 |
+| MySQL baza              | 3306 |
 
-```bash
-ng build
-```
+## Napomena o AI servisu
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Dugme za AI analizu vozila (u servisnim nalozima) poziva backend, koji dalje prosljeđuje zahtjev ka posebnom Python (Flask) AI servisu na portu 5000. Ako taj servis nije pokrenut, ostatak aplikacije radi normalno - samo AI analiza neće vratiti rezultat.
