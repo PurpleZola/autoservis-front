@@ -81,6 +81,14 @@
   }
 }
 
+.ai-button {
+  color: #ff6600;
+
+  &:hover {
+    background: rgba(255, 102, 0, 0.1);
+  }
+}
+
 .empty-state {
   margin: 0;
   padding: 1.5rem;

@@ -1,0 +1,115 @@
+<div class="ai-dialog">
+  <div class="ai-dialog-header">
+    <div class="header-title">
+      <mat-icon class="ai-icon">auto_awesome</mat-icon>
+      <div>
+        <h2 mat-dialog-title>AI Analiza vozila</h2>
+        @if (predvidjanje()?.marka || preporukaDijelova()?.marka) {
+          <p class="vehicle-sub">
+            {{ predvidjanje()?.marka ?? preporukaDijelova()?.marka }}
+            {{ predvidjanje()?.model ?? preporukaDijelova()?.model }}
+            @if (predvidjanje()?.kilometraza) {
+              &middot; {{ predvidjanje()?.kilometraza }} km
+            }
+          </p>
+        }
+      </div>
+    </div>
+    <button mat-icon-button class="close-button" (click)="onClose()" aria-label="Zatvori">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  <div mat-dialog-content class="ai-dialog-content">
+    @if (loading()) {
+      <div class="loading-container">
+        <mat-spinner diameter="44"></mat-spinner>
+        <p>Analiziranje vozila u toku...</p>
+      </div>
+    } @else {
+      @if (errorMessage()) {
+        <div class="error-banner">
+          <mat-icon>error_outline</mat-icon>
+          <span>{{ errorMessage() }}</span>
+        </div>
+      }
+
+      @if (predvidjanje()?.preporuka) {
+        <div class="info-banner">
+          <mat-icon>info</mat-icon>
+          <span>{{ predvidjanje()?.preporuka }}</span>
+        </div>
+      }
+
+      <section class="ai-section">
+        <h3><mat-icon>lightbulb</mat-icon>Preporuke</h3>
+        @if (predvidjanje()?.preporuke?.length) {
+          <ul class="preporuke-list">
+            @for (p of predvidjanje()!.preporuke; track p) {
+              <li>
+                <mat-icon class="bullet-icon">check_circle</mat-icon>
+                <span>{{ p }}</span>
+              </li>
+            }
+          </ul>
+        } @else if (!predvidjanje()?.preporuka) {
+          <p class="empty-hint">Nema dostupnih preporuka za ovo vozilo.</p>
+        }
+      </section>
+
+      <section class="ai-section">
+        <h3><mat-icon>history</mat-icon>Istorija kvarova</h3>
+        @if (predvidjanje()?.istorija_kvarova?.length) {
+          <div class="chip-row">
+            @for (k of predvidjanje()!.istorija_kvarova; track $index) {
+              <span class="ai-chip">{{ k }}</span>
+            }
+          </div>
+          @if (predvidjanje()?.broj_servisa) {
+            <p class="section-hint">Ukupno servisnih naloga: {{ predvidjanje()?.broj_servisa }}</p>
+          }
+        } @else {
+          <p class="empty-hint">Nema zabilježenih kvarova za ovo vozilo.</p>
+        }
+      </section>
+
+      <section class="ai-section">
+        <h3><mat-icon>build</mat-icon>Preporučeni dijelovi</h3>
+        @if (preporukaDijelova()?.greska) {
+          <p class="empty-hint">{{ preporukaDijelova()?.greska }}</p>
+        } @else {
+          @if (preporukaDijelova()?.preporuceni_dijelovi?.length) {
+            <div class="dio-list">
+              @for (d of preporukaDijelova()!.preporuceni_dijelovi; track d.naziv) {
+                <div class="dio-card">
+                  <mat-icon class="dio-icon">settings_suggest</mat-icon>
+                  <div class="dio-info">
+                    <p class="dio-naziv">{{ d.naziv }}</p>
+                    <p class="dio-razlog">{{ d.razlog }}</p>
+                  </div>
+                </div>
+              }
+            </div>
+          } @else {
+            <p class="empty-hint">Nema preporučenih dijelova za zamjenu.</p>
+          }
+
+          @if (preporukaDijelova()?.najcesci_dijelovi?.length) {
+            <p class="section-hint">
+              Najčešće mijenjani dijelovi za {{ preporukaDijelova()?.marka }}:
+            </p>
+            <div class="chip-row">
+              @for (nd of preporukaDijelova()!.najcesci_dijelovi; track nd.naziv) {
+                <span class="ai-chip">{{ nd.naziv }} &times;{{ nd.broj_zamjena }}</span>
+              }
+            </div>
+          }
+        }
+      </section>
+    }
+  </div>
+
+  <div mat-dialog-actions align="end">
+    <button mat-raised-button class="close-action-button" (click)="onClose()">Zatvori</button>
+  </div>
+</div>

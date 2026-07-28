@@ -12,6 +12,7 @@ import {
   ServisniNalogDialogComponent,
   ServisniNalogDialogData
 } from './servisni-nalog-dialog/servisni-nalog-dialog.component';
+import { AiDialogComponent, AiDialogData } from './ai-dialog/ai-dialog.component';
 
 @Component({
   selector: 'app-servisni-nalozi',
@@ -89,6 +90,14 @@ export class ServisniNaloziComponent implements OnInit {
           this.errorMessage.set(err?.error?.greska ?? 'Greška prilikom čuvanja servisnog naloga.');
         }
       });
+    });
+  }
+
+  openAiDialog(servisniNalog: ServisniNalog): void {
+    this.dialog.open<AiDialogComponent, AiDialogData>(AiDialogComponent, {
+      width: '520px',
+      panelClass: 'ai-dialog-panel',
+      data: { voziloId: servisniNalog.voziloId }
     });
   }
 

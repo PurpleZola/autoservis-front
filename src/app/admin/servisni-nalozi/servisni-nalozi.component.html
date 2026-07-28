@@ -58,6 +58,9 @@
         <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef>Akcije</th>
           <td mat-cell *matCellDef="let nalog">
+            <button mat-icon-button class="ai-button" (click)="openAiDialog(nalog)" aria-label="AI analiza vozila">
+              <mat-icon>auto_awesome</mat-icon>
+            </button>
             <button mat-icon-button (click)="openDialog(nalog)" aria-label="Izmijeni servisni nalog">
               <mat-icon>edit</mat-icon>
             </button>

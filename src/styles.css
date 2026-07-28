@@ -10,6 +10,61 @@
   --mat-sys-on-error-container: #b34700;
 }
 
+/* Baseline box model: without this, an element with an explicit width
+   (grid track, flex stretch, 100%) plus its own border/padding renders
+   wider than that width (default content-box adds them on top), which is
+   exactly what was overflowing the page horizontally by a few pixels
+   across bordered cards/containers that never set box-sizing themselves. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Prevent a horizontal scrollbar at the viewport level - components that
+   momentarily overshoot 100% width (dialogs animating in, wide tables)
+   should scroll internally, not push the whole page sideways. Covers the
+   document root, the Angular app root, and both halves of every
+   mat-sidenav layout (admin and user), since overflow:hidden on a
+   descendant can't stop the ancestor's own scrollbar from appearing. */
+html,
+body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+app-root {
+  display: block;
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+mat-sidenav-container,
+.mat-sidenav-container,
+.mat-drawer-container {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+mat-sidenav-content,
+.mat-sidenav-content,
+.mat-drawer-content {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+/* mat-table defaults to table-layout:auto, so it will grow past its own
+   width:100% to fit un-shrinkable cell content (status chips, action icon
+   buttons, nowrap dates) regardless of the CSS width we gave it. Each page
+   already wraps its table in a `.table-container` with overflow:auto so
+   that growth scrolls locally - but only if the table itself is capped at
+   100% of that container instead of being left free to size to content. */
+.table-container,
+table.mat-mdc-table,
+.mat-mdc-table {
+  max-width: 100%;
+}
+
 /* The dialog surface and select/menu overlay panels are rendered by the CDK
    overlay outside any component's own view encapsulation, so they can only
    be restyled from a global sheet. Shared by every add/edit dialog in the
@@ -37,4 +92,32 @@
 
   --mat-sys-on-surface: #2c2c2c;
   --mat-sys-surface-container: #ffffff;
+}
+
+/* AI analysis dialog surface. Same clean white surface and thin light-gray
+   border as `.app-dialog-panel` - the AI dialog stays fully in the app's
+   professional white/orange theme rather than reading as a separate,
+   glowing "AI" surface. Its identity comes from the orange header icon and
+   section accents inside ai-dialog.component.scss, not the panel chrome. */
+.ai-dialog-panel .mat-mdc-dialog-surface {
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  box-shadow:
+    0 20px 48px rgba(0, 0, 0, 0.16),
+    0 2px 8px rgba(0, 0, 0, 0.08);
+  color: #2c2c2c;
+
+  --mat-sys-on-surface: #2c2c2c;
+  --mat-sys-on-surface-variant: #6b6b6b;
+  --mat-sys-outline: rgba(0, 0, 0, 0.3);
+  --mat-sys-outline-variant: rgba(0, 0, 0, 0.12);
+}
+
+.mat-drawer-inner-container {
+  overflow: hidden !important;
+}
+
+mat-sidenav-container {
+  overflow: hidden !important;
 }
