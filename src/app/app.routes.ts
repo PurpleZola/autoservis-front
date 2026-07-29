@@ -79,6 +79,13 @@ export const routes: Routes = [
         loadComponent: () => import('./user/vozila/user-vozila.component').then(m => m.UserVozilaComponent)
       },
       {
+        path: 'istorija-servisa/:voziloId',
+        loadComponent: () =>
+          import('./user/istorija-servisa/user-istorija-servisa.component').then(
+            m => m.UserIstorijaServisaComponent
+          )
+      },
+      {
         path: 'servisni-nalozi',
         loadComponent: () =>
           import('./user/servisni-nalozi/user-servisni-nalozi.component').then(m => m.UserServisniNaloziComponent)

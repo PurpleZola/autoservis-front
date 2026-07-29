@@ -52,6 +52,16 @@
           <td mat-cell *matCellDef="let vozilo">{{ vozilo.kilometraza }}</td>
         </ng-container>
 
+        <ng-container matColumnDef="akcije">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let vozilo">
+            <a mat-button color="primary" [routerLink]="['/user/istorija-servisa', vozilo.id]">
+              <mat-icon>history</mat-icon>
+              Istorija servisa
+            </a>
+          </td>
+        </ng-container>
+
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>

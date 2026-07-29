@@ -1,0 +1,125 @@
+<div class="istorija-page">
+  <div class="header-row">
+    <a mat-icon-button routerLink="/user/vozila" aria-label="Nazad na vozila" class="back-button">
+      <mat-icon>arrow_back</mat-icon>
+    </a>
+    <h1>Istorija servisa</h1>
+  </div>
+
+  @if (errorMessage()) {
+    <div class="error-banner">
+      <mat-icon>error_outline</mat-icon>
+      <span>{{ errorMessage() }}</span>
+    </div>
+  }
+
+  @if (loading()) {
+    <div class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+  } @else if (vozilo(); as v) {
+    <mat-card class="vozilo-card">
+      <mat-icon class="vozilo-icon">directions_car</mat-icon>
+      <div class="vozilo-details">
+        <div class="vozilo-naziv">{{ v.marka }} {{ v.model }}</div>
+        <div class="vozilo-meta">
+          <span><mat-icon>event</mat-icon>{{ v.godina }}</span>
+          <span><mat-icon>badge</mat-icon>{{ v.registracija }}</span>
+        </div>
+      </div>
+    </mat-card>
+
+    <div class="section">
+      <h2>Servisni nalozi</h2>
+
+      @if (nalozi().length === 0) {
+        <p class="empty-state">Za ovo vozilo nema evidentiranih servisnih naloga.</p>
+      } @else {
+        <mat-accordion class="nalozi-accordion" multi>
+          @for (nalog of nalozi(); track nalog.id) {
+            <mat-expansion-panel class="nalog-panel">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  {{ nalog.datumPrijema }} — {{ nalog.opisProblema }}
+                </mat-panel-title>
+                <mat-panel-description>
+                  <mat-chip [class]="'status-chip status-' + nalog.status" disableRipple>
+                    {{ nalog.status }}
+                  </mat-chip>
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+
+              <div class="nalog-body">
+                <div class="nalog-meta">
+                  <span><strong>Serviser:</strong> {{ nalog.serviser }}</span>
+                  @if (nalog.datumZavrsetka) {
+                    <span><strong>Datum završetka:</strong> {{ nalog.datumZavrsetka }}</span>
+                  }
+                  @if (nalog.sledeciServisDatum) {
+                    <span><strong>Sljedeći servis:</strong> {{ nalog.sledeciServisDatum }}</span>
+                  }
+                </div>
+
+                <div class="nalog-grid">
+                  <div class="nalog-block">
+                    <h3><mat-icon>report_problem</mat-icon>Kvarovi</h3>
+                    @if (nalog.kvarovi.length === 0) {
+                      <p class="empty-inline">Nema evidentiranih kvarova.</p>
+                    } @else {
+                      <ul>
+                        @for (kvar of nalog.kvarovi; track kvar.id) {
+                          <li><strong>{{ kvar.naziv }}</strong> — {{ kvar.opis }}</li>
+                        }
+                      </ul>
+                    }
+                  </div>
+
+                  <div class="nalog-block">
+                    <h3><mat-icon>build</mat-icon>Usluge</h3>
+                    @if (nalog.usluge.length === 0) {
+                      <p class="empty-inline">Nema evidentiranih usluga.</p>
+                    } @else {
+                      <ul>
+                        @for (usluga of nalog.usluge; track usluga.id) {
+                          <li>{{ usluga.naziv }} <span class="price">{{ usluga.cijena }} KM</span></li>
+                        }
+                      </ul>
+                    }
+                  </div>
+
+                  <div class="nalog-block">
+                    <h3><mat-icon>settings</mat-icon>Dijelovi</h3>
+                    @if (nalog.dijelovi.length === 0) {
+                      <p class="empty-inline">Nema ugrađenih dijelova.</p>
+                    } @else {
+                      <ul>
+                        @for (dio of nalog.dijelovi; track dio.id) {
+                          <li>{{ dio.naziv }} <span class="price">{{ dio.cijena }} KM</span></li>
+                        }
+                      </ul>
+                    }
+                  </div>
+
+                  <div class="nalog-block">
+                    <h3><mat-icon>receipt_long</mat-icon>Račun</h3>
+                    @if (nalog.racun; as racun) {
+                      <div class="racun-details">
+                        <span><strong>Datum:</strong> {{ racun.datum }}</span>
+                        <span><strong>Ukupno:</strong> {{ racun.ukupnaCijena }} KM</span>
+                        @if (racun.napomena) {
+                          <span><strong>Napomena:</strong> {{ racun.napomena }}</span>
+                        }
+                      </div>
+                    } @else {
+                      <p class="empty-inline">Račun još nije izdat.</p>
+                    }
+                  </div>
+                </div>
+              </div>
+            </mat-expansion-panel>
+          }
+        </mat-accordion>
+      }
+    </div>
+  }
+</div>

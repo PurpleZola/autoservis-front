@@ -1,8 +1,10 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { RouterLink } from '@angular/router';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { CurrentKlijentService } from '../../services/current-klijent.service';
@@ -12,7 +14,7 @@ import { Vozilo } from '../../models/vozilo.model';
 @Component({
   selector: 'app-user-vozila',
   standalone: true,
-  imports: [MatTableModule, MatIconModule, MatProgressSpinnerModule],
+  imports: [RouterLink, MatTableModule, MatIconModule, MatButtonModule, MatProgressSpinnerModule],
   templateUrl: './user-vozila.component.html',
   styleUrl: './user-vozila.component.scss'
 })
@@ -20,7 +22,16 @@ export class UserVozilaComponent implements OnInit {
   private readonly currentKlijentService = inject(CurrentKlijentService);
   private readonly vozilaService = inject(VozilaService);
 
-  readonly displayedColumns = ['marka', 'model', 'godina', 'registracija', 'boja', 'gorivo', 'kilometraza'];
+  readonly displayedColumns = [
+    'marka',
+    'model',
+    'godina',
+    'registracija',
+    'boja',
+    'gorivo',
+    'kilometraza',
+    'akcije'
+  ];
   readonly vozila = signal<Vozilo[]>([]);
   readonly loading = signal(false);
   readonly errorMessage = signal<string | null>(null);
