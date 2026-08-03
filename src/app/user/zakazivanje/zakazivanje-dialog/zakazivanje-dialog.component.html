@@ -1,0 +1,67 @@
+<h2 mat-dialog-title>Zakaži termin — {{ data.datum }}</h2>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div mat-dialog-content class="dialog-content">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Vozilo</mat-label>
+      <mat-select formControlName="voziloId" panelClass="app-select-panel">
+        @for (vozilo of data.vozila; track vozilo.id) {
+          <mat-option [value]="vozilo.id">
+            {{ vozilo.marka }} {{ vozilo.model }} ({{ vozilo.registracija }})
+          </mat-option>
+        }
+      </mat-select>
+      @if (data.vozila.length === 0) {
+        <mat-hint>Nemate registrovanih vozila.</mat-hint>
+      }
+      @if (form.controls.voziloId.hasError('required') && form.controls.voziloId.touched) {
+        <mat-error>Vozilo je obavezno</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Vrijeme termina</mat-label>
+      <mat-select formControlName="vrijemeTermina" panelClass="app-select-panel">
+        @for (vrijeme of vrijemeOptions; track vrijeme) {
+          <mat-option [value]="vrijeme" [disabled]="zauzetaVremena().has(vrijeme)">
+            {{ vrijeme }}{{ zauzetaVremena().has(vrijeme) ? ' — Zauzeto' : '' }}
+          </mat-option>
+        }
+      </mat-select>
+      @if (form.controls.vrijemeTermina.hasError('required') && form.controls.vrijemeTermina.touched) {
+        <mat-error>Vrijeme je obavezno</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Opis problema</mat-label>
+      <textarea matInput formControlName="opisProblema" rows="3"></textarea>
+      @if (form.controls.opisProblema.hasError('required') && form.controls.opisProblema.touched) {
+        <mat-error>Opis problema je obavezan</mat-error>
+      }
+    </mat-form-field>
+
+    @if (errorMessage()) {
+      <div class="error-banner">
+        <mat-icon>error_outline</mat-icon>
+        <span>{{ errorMessage() }}</span>
+      </div>
+    }
+  </div>
+
+  <div mat-dialog-actions align="end">
+    <button mat-button type="button" (click)="onCancel()" [disabled]="submitting()">Otkaži</button>
+    <button
+      mat-raised-button
+      type="submit"
+      class="save-button"
+      [disabled]="data.vozila.length === 0 || submitting()"
+    >
+      @if (submitting()) {
+        <mat-spinner diameter="20"></mat-spinner>
+      } @else {
+        <span>Zakaži</span>
+      }
+    </button>
+  </div>
+</form>

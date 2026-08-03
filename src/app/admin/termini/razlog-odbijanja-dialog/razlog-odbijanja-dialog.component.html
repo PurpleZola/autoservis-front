@@ -1,0 +1,17 @@
+<h2 mat-dialog-title>Odbij termin — {{ data.termin.datumTermina }} u {{ data.termin.vrijemeTermina }}</h2>
+
+<form [formGroup]="form">
+  <div mat-dialog-content class="dialog-content">
+    <p class="hint-text">Opciono unesite razlog odbijanja - klijent će ga vidjeti uz status termina.</p>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Razlog odbijanja (opciono)</mat-label>
+      <textarea matInput formControlName="razlogOdbijanja" rows="3"></textarea>
+    </mat-form-field>
+  </div>
+
+  <div mat-dialog-actions align="end">
+    <button mat-button type="button" (click)="onCancel()">Otkaži</button>
+    <button mat-raised-button type="button" class="reject-button" (click)="onOdbij()">Odbij termin</button>
+  </div>
+</form>

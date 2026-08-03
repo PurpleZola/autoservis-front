@@ -56,6 +56,10 @@ export const routes: Routes = [
       {
         path: 'racuni',
         loadComponent: () => import('./admin/racuni/racuni.component').then(m => m.RacuniComponent)
+      },
+      {
+        path: 'termini',
+        loadComponent: () => import('./admin/termini/termini.component').then(m => m.TerminiComponent)
       }
     ]
   },
@@ -93,6 +97,10 @@ export const routes: Routes = [
       {
         path: 'racuni',
         loadComponent: () => import('./user/racuni/user-racuni.component').then(m => m.UserRacuniComponent)
+      },
+      {
+        path: 'zakazivanje',
+        loadComponent: () => import('./user/zakazivanje/zakazivanje.component').then(m => m.ZakazivanjeComponent)
       }
     ]
   },

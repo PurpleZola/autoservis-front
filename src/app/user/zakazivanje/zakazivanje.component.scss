@@ -1,0 +1,211 @@
+.zakazivanje-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  h1 {
+    margin: 0;
+    font: var(--mat-sys-headline-medium);
+  }
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  padding: 2rem 0;
+}
+
+.calendar-container {
+  border-radius: 16px;
+  overflow: hidden;
+  background: #ffffff;
+  border: 1px solid #E0E0E0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  padding: 1rem;
+
+  ::ng-deep .fc {
+    font-family: inherit;
+  }
+
+  ::ng-deep .fc-button-primary {
+    background-image: linear-gradient(135deg, #FF6600 0%, #E65C00 100%);
+    border: none;
+    text-transform: capitalize;
+  }
+
+  ::ng-deep .fc-button-primary:hover {
+    background-image: linear-gradient(135deg, #E65C00 0%, #CC5200 100%);
+  }
+
+  ::ng-deep .fc-button-primary:disabled {
+    background-image: none;
+    background-color: #E0E0E0;
+  }
+
+  // Past dates and weekends are not schedulable - gray them out and drop the
+  // pointer cursor so their disabled state reads visually before a click is
+  // even attempted. `.fc-day-today` is declared after so "today" still gets
+  // its orange highlight even when today happens to fall on a weekend.
+  ::ng-deep .fc-day-past,
+  ::ng-deep .fc-day-sat,
+  ::ng-deep .fc-day-sun {
+    background-color: #F5F5F5 !important;
+
+    .fc-daygrid-day-number {
+      color: #B0B0B0;
+    }
+  }
+
+  ::ng-deep .fc-day-today {
+    background: rgba(255, 102, 0, 0.08) !important;
+  }
+
+  ::ng-deep .fc-toolbar-title {
+    color: #2C2C2C;
+  }
+
+  ::ng-deep .fc-daygrid-day,
+  ::ng-deep .fc-timegrid-col {
+    transition: background-color 0.15s ease;
+  }
+
+  ::ng-deep .fc-daygrid-day:not(.fc-day-past):not(.fc-day-sat):not(.fc-day-sun):hover,
+  ::ng-deep .fc-timegrid-col:not(.fc-day-past):not(.fc-day-sat):not(.fc-day-sun):hover {
+    background-color: #FFF3E0 !important;
+    cursor: pointer;
+  }
+
+  ::ng-deep .fc-daygrid-day.fc-day-past,
+  ::ng-deep .fc-daygrid-day.fc-day-sat,
+  ::ng-deep .fc-daygrid-day.fc-day-sun,
+  ::ng-deep .fc-timegrid-col.fc-day-past,
+  ::ng-deep .fc-timegrid-col.fc-day-sat,
+  ::ng-deep .fc-timegrid-col.fc-day-sun {
+    cursor: not-allowed;
+  }
+
+  ::ng-deep .fc-daygrid-event-dot {
+    border-width: 5px;
+  }
+
+  ::ng-deep .fc-event.termin-event {
+    cursor: default;
+    border-width: 1px;
+    transition: filter 0.15s ease, box-shadow 0.15s ease;
+
+    &:hover {
+      filter: brightness(0.85);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    }
+  }
+}
+
+.legend {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.875rem;
+  color: #6B6B6B;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+
+  &.dot-ceka { background: #F57F17; }
+  &.dot-prihvacen { background: #2E7D32; }
+  &.dot-odbijen { background: #C62828; }
+}
+
+.error-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #C62828;
+  background: rgba(198, 40, 40, 0.08);
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+}
+
+.termini-list-container {
+  border-radius: 16px;
+  background: #ffffff;
+  border: 1px solid #E0E0E0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+  padding: 1.25rem 1.5rem;
+
+  h2 {
+    margin: 0 0 1rem;
+    font: var(--mat-sys-title-medium);
+    color: #2C2C2C;
+  }
+}
+
+.termini-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.termin-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid #F0F0F0;
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.termin-datum {
+  flex: 0 0 auto;
+  font-weight: 600;
+  color: #2C2C2C;
+  white-space: nowrap;
+}
+
+.termin-opis {
+  flex: 1 1 auto;
+  color: #6B6B6B;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.termin-razlog {
+  flex: 1 1 auto;
+  color: #C62828;
+  font-style: italic;
+  font-size: 0.8125rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.status-chip {
+  flex: 0 0 auto;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  border: 1px solid transparent;
+
+  &.status-CEKA { background: #FFF8E1; border-color: #F57F17; color: #F57F17; }
+  &.status-PRIHVACEN { background: #E8F5E9; border-color: #2E7D32; color: #2E7D32; }
+  &.status-ODBIJEN { background: #FFEBEE; border-color: #C62828; color: #C62828; }
+}

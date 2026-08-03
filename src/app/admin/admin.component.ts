@@ -56,7 +56,8 @@ export class AdminComponent implements OnInit {
     { icon: 'report_problem', label: 'Kvarovi', route: 'kvarovi' },
     { icon: 'home_repair_service', label: 'Usluge', route: 'usluge' },
     { icon: 'settings', label: 'Dijelovi', route: 'dijelovi' },
-    { icon: 'receipt_long', label: 'Računi', route: 'racuni' }
+    { icon: 'receipt_long', label: 'Računi', route: 'racuni' },
+    { icon: 'event', label: 'Termini', route: 'termini' }
   ];
 
   ngOnInit(): void {

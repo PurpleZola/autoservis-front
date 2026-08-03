@@ -25,7 +25,9 @@
       <mat-label>Servisni nalog</mat-label>
       <mat-select formControlName="servisniNalogId" panelClass="app-select-panel">
         @for (nalog of servisniNalozi(); track nalog.id) {
-          <mat-option [value]="nalog.id">{{ nalog.id }} - {{ nalog.opisProblema }}</mat-option>
+          <mat-option [value]="nalog.id">
+            {{ nalog.datumPrijema }} - {{ nalog.opisProblema }} - {{ nalog.status }}
+          </mat-option>
         }
       </mat-select>
       @if (loadingServisniNalozi()) {

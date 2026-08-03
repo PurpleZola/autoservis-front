@@ -44,7 +44,9 @@
       <mat-label>Vozilo</mat-label>
       <mat-select formControlName="voziloId" panelClass="app-select-panel">
         @for (vozilo of vozila(); track vozilo.id) {
-          <mat-option [value]="vozilo.id">{{ vozilo.marka }} {{ vozilo.model }}</mat-option>
+          <mat-option [value]="vozilo.id">
+            {{ vozilo.marka }} {{ vozilo.model }} ({{ vozilo.registracija }}) - {{ vozilo.gorivo }}
+          </mat-option>
         }
       </mat-select>
       @if (loadingOptions()) {
@@ -59,7 +61,7 @@
       <mat-label>Serviser</mat-label>
       <mat-select formControlName="serviserID" panelClass="app-select-panel">
         @for (serviser of serviseri(); track serviser.id) {
-          <mat-option [value]="serviser.id">{{ serviser.ime }} {{ serviser.prezime }}</mat-option>
+          <mat-option [value]="serviser.id">{{ serviser.ime }} {{ serviser.prezime }} - {{ serviser.specijalnost }}</mat-option>
         }
       </mat-select>
       @if (form.controls.serviserID.hasError('required') && form.controls.serviserID.touched) {

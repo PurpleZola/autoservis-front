@@ -1,0 +1,59 @@
+<div class="zakazivanje-page">
+  <div class="header-row">
+    <h1>Zakaži termin</h1>
+  </div>
+
+  @if (errorMessage()) {
+    <div class="error-banner">
+      <mat-icon>error_outline</mat-icon>
+      <span>{{ errorMessage() }}</span>
+    </div>
+  }
+
+  @if (loading()) {
+    <div class="loading-container">
+      <mat-spinner diameter="40"></mat-spinner>
+    </div>
+  }
+
+  <div class="calendar-container">
+    <full-calendar [options]="calendarOptions()"></full-calendar>
+  </div>
+
+  <div class="legend">
+    <span class="legend-item"><span class="dot dot-ceka"></span>Na čekanju</span>
+    <span class="legend-item"><span class="dot dot-prihvacen"></span>Prihvaćen</span>
+    <span class="legend-item"><span class="dot dot-odbijen"></span>Odbijen</span>
+  </div>
+
+  <div class="termini-list-container">
+    <h2>Moji termini</h2>
+
+    @if (termini().length === 0) {
+      <p class="empty-state">Nemate zakazanih termina.</p>
+    } @else {
+      <div class="termini-list">
+        @for (termin of termini(); track termin.id) {
+          <div class="termin-row">
+            <span class="termin-datum">{{ termin.datumTermina }} u {{ termin.vrijemeTermina }}</span>
+            <span class="termin-opis">{{ termin.opisProblema }}</span>
+            @if (termin.status === 'ODBIJEN' && termin.razlogOdbijanja) {
+              <span class="termin-razlog">{{ termin.razlogOdbijanja }}</span>
+            }
+            <mat-chip
+              disableRipple
+              class="status-chip"
+              [ngClass]="{
+                'status-CEKA': termin.status === 'CEKA',
+                'status-PRIHVACEN': termin.status === 'PRIHVACEN',
+                'status-ODBIJEN': termin.status === 'ODBIJEN'
+              }"
+            >
+              {{ termin.status }}
+            </mat-chip>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>

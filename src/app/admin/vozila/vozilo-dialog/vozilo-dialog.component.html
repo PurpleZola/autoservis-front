@@ -76,7 +76,7 @@
       <mat-label>Klijent</mat-label>
       <mat-select formControlName="klijentId" panelClass="app-select-panel">
         @for (klijent of klijenti(); track klijent.id) {
-          <mat-option [value]="klijent.id">{{ klijent.ime }} {{ klijent.prezime }} ({{ klijent.id }})</mat-option>
+          <mat-option [value]="klijent.id">{{ klijent.ime }} {{ klijent.prezime }} - {{ klijent.telefon }}</mat-option>
         }
       </mat-select>
       @if (loadingKlijenti()) {

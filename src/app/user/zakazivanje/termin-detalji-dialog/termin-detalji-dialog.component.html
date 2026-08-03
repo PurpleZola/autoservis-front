@@ -1,0 +1,59 @@
+<h2 mat-dialog-title>Detalji termina</h2>
+
+<div mat-dialog-content class="dialog-content">
+  <div class="detail-row">
+    <span class="detail-label">Datum</span>
+    <span class="detail-value">{{ data.termin.datumTermina }}</span>
+  </div>
+
+  <div class="detail-row">
+    <span class="detail-label">Vrijeme</span>
+    <span class="detail-value">{{ data.termin.vrijemeTermina }}</span>
+  </div>
+
+  <div class="detail-row">
+    <span class="detail-label">Vozilo</span>
+    <span class="detail-value">
+      @if (data.vozilo) {
+        {{ data.vozilo.marka }} {{ data.vozilo.model }} ({{ data.vozilo.registracija }})
+      } @else {
+        Nepoznato vozilo
+      }
+    </span>
+  </div>
+
+  <div class="detail-row">
+    <span class="detail-label">Opis problema</span>
+    <span class="detail-value">{{ data.termin.opisProblema }}</span>
+  </div>
+
+  <div class="detail-row">
+    <span class="detail-label">Status</span>
+    <mat-chip
+      disableRipple
+      class="status-chip"
+      [ngClass]="{
+        'status-CEKA': data.termin.status === 'CEKA',
+        'status-PRIHVACEN': data.termin.status === 'PRIHVACEN',
+        'status-ODBIJEN': data.termin.status === 'ODBIJEN'
+      }"
+    >
+      {{ data.termin.status }}
+    </mat-chip>
+  </div>
+
+  @if (data.termin.status === 'ODBIJEN' && data.termin.razlogOdbijanja) {
+    <div class="detail-row">
+      <span class="detail-label">Razlog odbijanja</span>
+      <span class="detail-value">{{ data.termin.razlogOdbijanja }}</span>
+    </div>
+  }
+</div>
+
+<div mat-dialog-actions class="actions-row">
+  @if (data.termin.status === 'CEKA') {
+    <button mat-stroked-button type="button" class="cancel-button" (click)="onOtkazi()">Otkaži termin</button>
+  }
+  <span class="spacer"></span>
+  <button mat-raised-button type="button" class="close-button" (click)="onClose()">Zatvori</button>
+</div>

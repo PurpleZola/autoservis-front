@@ -50,7 +50,8 @@ export class UserComponent implements OnInit {
     { icon: 'dashboard', label: 'Pregled', route: 'dashboard' },
     { icon: 'directions_car', label: 'Vozila', route: 'vozila' },
     { icon: 'assignment', label: 'Servisni nalozi', route: 'servisni-nalozi' },
-    { icon: 'receipt_long', label: 'Računi', route: 'racuni' }
+    { icon: 'receipt_long', label: 'Računi', route: 'racuni' },
+    { icon: 'event', label: 'Zakaži termin', route: 'zakazivanje' }
   ];
 
   ngOnInit(): void {

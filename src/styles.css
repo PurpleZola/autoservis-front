@@ -114,6 +114,15 @@ table.mat-mdc-table,
   --mat-sys-outline-variant: rgba(0, 0, 0, 0.12);
 }
 
+/* Success confirmation toast (e.g. termin booked/cancelled) - MatSnackBar
+   renders in the CDK overlay outside any component's view encapsulation, so
+   the panelClass passed to MatSnackBarConfig can only be restyled globally. */
+.app-success-snackbar {
+  --mat-snack-bar-container-color: #2e7d32;
+  --mat-snack-bar-supporting-text-color: #ffffff;
+  --mat-snack-bar-button-color: #ffffff;
+}
+
 .mat-drawer-inner-container {
   overflow: hidden !important;
 }

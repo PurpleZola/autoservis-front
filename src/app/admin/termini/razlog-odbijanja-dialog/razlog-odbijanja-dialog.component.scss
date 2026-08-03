@@ -1,0 +1,25 @@
+.dialog-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 340px;
+}
+
+.hint-text {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: #6B6B6B;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.reject-button {
+  border: none;
+  background-color: #C62828;
+  color: #ffffff;
+  font-weight: 600;
+
+  --mat-sys-primary: #ffffff;
+}
