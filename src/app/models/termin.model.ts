@@ -7,4 +7,5 @@ export interface Termin {
     voziloId: number;
     klijentId: number;
     razlogOdbijanja?: string;
+    servisniNalogId?: number;
 }

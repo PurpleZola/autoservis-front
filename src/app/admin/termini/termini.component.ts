@@ -5,6 +5,8 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 import { TerminService } from '../../services/termin.service';
 import { Termin } from '../../models/termin.model';
@@ -23,6 +25,8 @@ import {
 export class TerminiComponent implements OnInit {
   private readonly terminService = inject(TerminService);
   private readonly dialog = inject(MatDialog);
+  private readonly snackBar = inject(MatSnackBar);
+  private readonly router = inject(Router);
 
   readonly displayedColumns = ['datumTermina', 'vrijemeTermina', 'opisProblema', 'status', 'actions'];
   readonly termini = signal<Termin[]>([]);
@@ -70,10 +74,21 @@ export class TerminiComponent implements OnInit {
     const id = termin.id;
 
     this.terminService.updateStatus(id, status, razlogOdbijanja).subscribe({
-      next: () =>
+      next: (updated) => {
         this.termini.update((list) =>
           list.map((t) => (t.id === id ? { ...t, status, razlogOdbijanja } : t))
-        ),
+        );
+
+        if (status === 'PRIHVACEN' && updated.servisniNalogId) {
+          this.snackBar
+            .open('Termin prihvaćen i servisni nalog kreiran.', 'Otvori', {
+              duration: 5000,
+              panelClass: ['app-success-snackbar']
+            })
+            .onAction()
+            .subscribe(() => this.router.navigate(['/admin/servisni-nalozi']));
+        }
+      },
       error: () => this.errorMessage.set('Greška prilikom ažuriranja statusa termina.')
     });
   }
