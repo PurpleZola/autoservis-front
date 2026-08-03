@@ -15,6 +15,10 @@
   }
 }
 
+.filter-field {
+  width: 240px;
+}
+
 .loading-container {
   display: flex;
   justify-content: center;
@@ -83,12 +87,30 @@
   }
 }
 
+.delete-icon-button {
+  color: #6B6B6B;
+
+  &:hover {
+    color: #C62828;
+  }
+}
+
 .razlog-text {
   margin-top: 0.25rem;
   font-size: 0.75rem;
   color: #6B6B6B;
   font-style: italic;
   max-width: 240px;
+}
+
+mat-paginator {
+  background: transparent;
+  border-top: 1px solid #E0E0E0;
+
+  --mat-paginator-container-text-color: #2C2C2C;
+  --mat-paginator-container-background-color: transparent;
+  --mat-paginator-enabled-icon-color: #FF6600;
+  --mat-paginator-disabled-icon-color: rgba(0, 0, 0, 0.26);
 }
 
 .empty-state {
