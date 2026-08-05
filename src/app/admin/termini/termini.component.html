@@ -1,7 +1,9 @@
 <div class="termini-page">
   <div class="header-row">
     <h1>Termini</h1>
+  </div>
 
+  <div class="toolbar-row">
     <mat-form-field appearance="outline" class="filter-field">
       <mat-label>Filter po statusu</mat-label>
       <mat-select [value]="statusFilter()" (selectionChange)="onFilterChange($event)" panelClass="app-select-panel">
@@ -57,25 +59,27 @@
         <ng-container matColumnDef="actions">
           <th mat-header-cell *matHeaderCellDef>Akcije</th>
           <td mat-cell *matCellDef="let termin">
-            <button
-              mat-raised-button
-              class="accept-button"
-              [disabled]="termin.status !== 'CEKA'"
-              (click)="prihvati(termin)"
-            >
-              Prihvati
-            </button>
-            <button
-              mat-raised-button
-              class="reject-button"
-              [disabled]="termin.status !== 'CEKA'"
-              (click)="odbij(termin)"
-            >
-              Odbij
-            </button>
-            <button mat-icon-button (click)="obrisi(termin)" aria-label="Obriši termin" class="delete-icon-button">
-              <mat-icon>delete</mat-icon>
-            </button>
+            <div class="actions-cell">
+              <button
+                mat-raised-button
+                class="accept-button"
+                [disabled]="termin.status !== 'CEKA'"
+                (click)="prihvati(termin)"
+              >
+                Prihvati
+              </button>
+              <button
+                mat-raised-button
+                class="reject-button"
+                [disabled]="termin.status !== 'CEKA'"
+                (click)="odbij(termin)"
+              >
+                Odbij
+              </button>
+              <button mat-icon-button (click)="obrisi(termin)" aria-label="Obriši termin" class="delete-icon-button">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
           </td>
         </ng-container>
 
